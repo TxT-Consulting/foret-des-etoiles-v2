@@ -6,1428 +6,1080 @@
 <title>La Forêt des Étoiles ✨</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --purple: #7C3AED; --pink: #EC4899; --teal: #0D9488;
-  --gold: #F59E0B; --bg: #0F0A1E; --text: #F1F5F9; --dim: #94A3B8;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+:root { --bg:#0F0A1E; --text:#F1F5F9; --dim:#94A3B8; --purple:#7C3AED; --pink:#EC4899; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-#stars {
-  position: fixed; inset: 0; z-index: 0;
-  background: radial-gradient(1px 1px at 8% 12%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 22% 38%, #FFE4B5, transparent),
-    radial-gradient(1px 1px at 37% 8%, #fff, transparent),
-    radial-gradient(2px 2px at 53% 67%, #E0E7FF, transparent),
-    radial-gradient(1px 1px at 68% 22%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 78% 52%, #FFF9C4, transparent),
-    radial-gradient(1px 1px at 89% 78%, #fff, transparent),
-    radial-gradient(2px 2px at 14% 83%, #E0E7FF, transparent),
-    radial-gradient(1px 1px at 44% 91%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 61% 42%, #FFE4B5, transparent),
-    radial-gradient(1px 1px at 4% 48%, #fff, transparent),
-    radial-gradient(1px 1px at 95% 31%, #fff, transparent),
-    linear-gradient(to bottom, #0F0A1E 0%, #1a0933 50%, #0F0A1E 100%);
-}
+#stars{position:fixed;inset:0;z-index:0;background:
+  radial-gradient(1px 1px at 8% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 22% 38%,#FFE4B5,transparent),
+  radial-gradient(1px 1px at 37% 8%,#fff,transparent),radial-gradient(2px 2px at 53% 67%,#E0E7FF,transparent),
+  radial-gradient(1px 1px at 68% 22%,#fff,transparent),radial-gradient(1.5px 1.5px at 78% 52%,#FFF9C4,transparent),
+  radial-gradient(1px 1px at 89% 78%,#fff,transparent),radial-gradient(2px 2px at 14% 83%,#E0E7FF,transparent),
+  radial-gradient(1px 1px at 44% 91%,#fff,transparent),radial-gradient(1.5px 1.5px at 61% 42%,#FFE4B5,transparent),
+  radial-gradient(1px 1px at 4% 48%,#fff,transparent),radial-gradient(1px 1px at 95% 31%,#fff,transparent),
+  radial-gradient(1px 1px at 30% 55%,#fff,transparent),radial-gradient(1.5px 1.5px at 82% 15%,#E0E7FF,transparent),
+  linear-gradient(to bottom,#0F0A1E 0%,#1a0933 50%,#0F0A1E 100%)}
 
-/* Top bar */
-#top-bar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 12px 20px;
-  background: rgba(15,10,30,0.85);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(139,92,246,0.2);
-}
-.top-left { display: flex; align-items: center; gap: 12px; }
-.top-right { display: flex; align-items: center; gap: 10px; }
-#char-pill {
-  display: none; align-items: center; gap: 6px;
-  background: rgba(255,255,255,0.08); border-radius: 20px;
-  padding: 4px 12px; font-size: 0.85rem; font-weight: 700;
-}
-.sound-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; opacity: 0.7; }
-.sound-btn:hover { opacity: 1; }
+#top-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(15,10,30,.88);backdrop-filter:blur(8px);border-bottom:1px solid rgba(139,92,246,.2);gap:10px}
+.top-left{display:flex;align-items:center;gap:10px;min-width:0}
+.top-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+#char-pill{display:none;align-items:center;gap:6px;background:rgba(255,255,255,.08);border-radius:20px;padding:4px 12px;font-size:.85rem;font-weight:700;white-space:nowrap}
+#hp-wrap{display:none;align-items:center;gap:6px;font-size:.8rem;font-weight:800}
+#hp-bar-outer{width:70px;height:8px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
+#hp-bar{height:100%;background:#10B981;border-radius:4px;transition:width .4s ease,background .3s}
+#inventory-bar{display:none;align-items:center;gap:4px;background:rgba(255,255,255,.05);border:1px solid rgba(139,92,246,.3);border-radius:20px;padding:4px 12px;font-size:1rem;flex-wrap:wrap}
+.sound-btn{background:none;border:none;font-size:1.2rem;cursor:pointer;opacity:.7;flex-shrink:0}
+.sound-btn:hover{opacity:1}
 
-/* HP bar */
-#hp-wrap {
-  display: none; align-items: center; gap: 8px;
-  background: rgba(255,255,255,0.08); border-radius: 20px;
-  padding: 4px 12px; font-size: 0.85rem; font-weight: 800;
-}
-#hp-bar-outer { width: 80px; height: 8px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
-#hp-bar { height: 100%; background: #10B981; border-radius: 4px; transition: width 0.4s ease, background 0.3s; }
+#app{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:80px 16px 60px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
 
-/* Inventory */
-#inventory-bar {
-  display: none; align-items: center; gap: 6px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(139,92,246,0.3);
-  border-radius: 20px; padding: 4px 14px;
-  font-size: 1rem;
-}
+.scene-art{text-align:center;font-size:4.5rem;margin-bottom:16px;animation:floatArt 3s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(139,92,246,.6))}
+@keyframes floatArt{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-#app {
-  position: relative; z-index: 1;
-  max-width: 680px; margin: 0 auto;
-  padding: 80px 16px 60px;
-  min-height: 100vh;
-  display: flex; flex-direction: column; justify-content: center;
-}
+.story-card{background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(236,72,153,.08));border:1px solid rgba(139,92,246,.3);border-radius:24px;padding:26px 22px;margin-bottom:20px;backdrop-filter:blur(10px);animation:fadeSlide .5s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
-/* Scene */
-.scene-art {
-  text-align: center; font-size: 5rem; margin-bottom: 16px;
-  animation: floatArt 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px rgba(139,92,246,0.6));
-}
-@keyframes floatArt { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.scene-title{font-family:'Playfair Display',serif;font-size:1.35rem;color:#C4B5FD;margin-bottom:14px;line-height:1.3}
+.scene-text{font-size:1.02rem;line-height:1.75;color:#E2E8F0}
+.scene-text p{margin-bottom:10px}
+.scene-text p:last-child{margin-bottom:0}
 
-.story-card {
-  background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(236,72,153,0.08));
-  border: 1px solid rgba(139,92,246,0.3);
-  border-radius: 24px; padding: 28px 24px; margin-bottom: 20px;
-  backdrop-filter: blur(10px);
-  animation: fadeSlide 0.5s ease;
-}
-@keyframes fadeSlide { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
-.scene-title {
-  font-family: 'Playfair Display', serif; font-size: 1.4rem;
-  color: #C4B5FD; margin-bottom: 16px; line-height: 1.3;
-}
-.scene-text { font-size: 1.05rem; line-height: 1.8; color: #E2E8F0; }
-.scene-text p { margin-bottom: 10px; }
-
-/* Choices */
-.choices { display: flex; flex-direction: column; gap: 12px; }
-.choice-btn {
-  background: rgba(255,255,255,0.05);
-  border: 1.5px solid rgba(139,92,246,0.4);
-  border-radius: 16px; padding: 16px 20px;
-  font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700;
-  color: #E2E8F0; cursor: pointer; text-align: left;
-  transition: all 0.2s;
-  display: flex; align-items: flex-start; gap: 12px;
-}
-.choice-btn:hover {
-  background: rgba(124,58,237,0.25); border-color: #8B5CF6;
-  transform: translateX(4px); box-shadow: 0 0 20px rgba(124,58,237,0.3);
-}
-.choice-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
-.choice-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
-.choice-body { flex: 1; }
-.choice-main { display: block; }
-.choice-hint { display: block; font-size: 0.78rem; color: #C4B5FD; font-weight: 600; margin-top: 2px; }
+.choices{display:flex;flex-direction:column;gap:11px}
+.choice-btn{background:rgba(255,255,255,.05);border:1.5px solid rgba(139,92,246,.4);border-radius:16px;padding:15px 18px;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:700;color:#E2E8F0;cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:flex-start;gap:12px}
+.choice-btn:hover{background:rgba(124,58,237,.25);border-color:#8B5CF6;transform:translateX(4px);box-shadow:0 0 20px rgba(124,58,237,.3)}
+.choice-btn:disabled{opacity:.4;cursor:default;transform:none}
+.choice-icon{font-size:1.35rem;flex-shrink:0;margin-top:1px}
+.choice-body{flex:1}
+.choice-main{display:block}
+.choice-hint{display:block;font-size:.76rem;color:#C4B5FD;font-weight:600;margin-top:3px}
 
 /* Combat */
-.combat-card {
-  background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(124,58,237,0.1));
-  border: 1px solid rgba(239,68,68,0.4);
-  border-radius: 24px; padding: 24px; margin-bottom: 20px;
-  animation: fadeSlide 0.5s ease;
-}
-.combat-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #FCA5A5; margin-bottom: 20px; text-align: center; }
-.combatants { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; margin-bottom: 20px; }
-.combatant { text-align: center; }
-.combatant-name { font-size: 0.85rem; font-weight: 800; color: #C4B5FD; margin-bottom: 6px; }
-.combatant-emoji { font-size: 2.5rem; margin-bottom: 8px; }
-.hp-label { font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; }
-.hp-bar-wrap { height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
-.hp-bar-fill { height: 100%; border-radius: 5px; transition: width 0.5s ease; }
-.hp-player { background: linear-gradient(90deg, #10B981, #34D399); }
-.hp-enemy { background: linear-gradient(90deg, #EF4444, #F87171); }
-.vs-text { font-size: 1.5rem; font-weight: 900; color: #F59E0B; }
-
-.dice-area { text-align: center; min-height: 60px; margin-bottom: 16px; }
-.dice-result { font-size: 0.95rem; color: #E2E8F0; line-height: 1.6; }
-.dice-spin { animation: diceSpin 0.4s ease; display: inline-block; font-size: 2rem; }
-@keyframes diceSpin { 0%{transform:rotate(0deg) scale(0.5)} 50%{transform:rotate(180deg) scale(1.2)} 100%{transform:rotate(360deg) scale(1)} }
-
-.combat-actions { display: flex; flex-direction: column; gap: 10px; }
-.combat-btn {
-  background: rgba(255,255,255,0.07); border: 1.5px solid rgba(139,92,246,0.4);
-  border-radius: 14px; padding: 14px 20px;
-  font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800;
-  color: #E2E8F0; cursor: pointer; transition: all 0.2s;
-  display: flex; align-items: center; gap: 10px;
-}
-.combat-btn:hover:not(:disabled) { background: rgba(124,58,237,0.3); transform: scale(1.02); }
-.combat-btn:disabled { opacity: 0.4; cursor: default; }
-.combat-btn.danger { border-color: rgba(239,68,68,0.5); }
-.combat-btn.danger:hover:not(:disabled) { background: rgba(239,68,68,0.2); }
-
-/* Typewriter */
-.typewriter-char { animation: fadeChar 0.03s ease forwards; opacity: 0; }
-@keyframes fadeChar { to { opacity: 1; } }
-
-/* Characters */
-.char-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 20px 0; }
-.char-card {
-  background: rgba(255,255,255,0.05); border: 2px solid rgba(139,92,246,0.3);
-  border-radius: 20px; padding: 20px 12px; text-align: center; cursor: pointer;
-  transition: all 0.25s;
-}
-.char-card:hover { border-color: #8B5CF6; background: rgba(124,58,237,0.2); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(124,58,237,0.3); }
-.char-emoji { font-size: 3rem; margin-bottom: 8px; }
-.char-name { font-size: 0.95rem; font-weight: 900; color: #C4B5FD; margin-bottom: 4px; }
-.char-trait { font-size: 0.78rem; color: #94A3B8; }
-.char-power { font-size: 0.75rem; color: #F59E0B; margin-top: 6px; font-weight: 700; }
-.char-stats { font-size: 0.72rem; color: #6EE7B7; margin-top: 4px; font-weight: 700; }
+.combat-card{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(124,58,237,.1));border:1px solid rgba(239,68,68,.4);border-radius:24px;padding:22px;margin-bottom:20px;animation:fadeSlide .5s ease}
+.combat-title{font-family:'Playfair Display',serif;font-size:1.25rem;color:#FCA5A5;margin-bottom:18px;text-align:center}
+.combatants{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-bottom:18px}
+.combatant{text-align:center}
+.c-emoji{font-size:2.3rem;margin-bottom:6px}
+.c-name{font-size:.8rem;font-weight:800;color:#C4B5FD;margin-bottom:5px}
+.c-hp{font-size:.78rem;font-weight:700;margin-bottom:4px}
+.c-bar{height:9px;background:rgba(255,255,255,.1);border-radius:5px;overflow:hidden}
+.c-bar-fill{height:100%;border-radius:5px;transition:width .5s ease}
+.hp-p{background:linear-gradient(90deg,#10B981,#34D399)}
+.hp-e{background:linear-gradient(90deg,#EF4444,#F87171)}
+.vs{font-size:1.4rem;font-weight:900;color:#F59E0B}
+.dice-area{text-align:center;min-height:56px;margin-bottom:14px;font-size:.93rem;color:#E2E8F0;line-height:1.6}
+.dice-spin{display:inline-block;animation:dspin .4s ease;font-size:1.8rem}
+@keyframes dspin{0%{transform:rotate(0) scale(.5)}50%{transform:rotate(180deg) scale(1.2)}100%{transform:rotate(360deg) scale(1)}}
+.combat-actions{display:flex;flex-direction:column;gap:9px}
+.combat-btn{background:rgba(255,255,255,.07);border:1.5px solid rgba(139,92,246,.4);border-radius:13px;padding:13px 18px;font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:800;color:#E2E8F0;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+.combat-btn:hover:not(:disabled){background:rgba(124,58,237,.3);transform:scale(1.02)}
+.combat-btn:disabled{opacity:.4;cursor:default}
+.combat-btn.danger{border-color:rgba(239,68,68,.5)}
+.combat-btn.danger:hover:not(:disabled){background:rgba(239,68,68,.2)}
 
 /* Title */
-.title-main {
-  font-family: 'Playfair Display', serif; font-size: 2.4rem; text-align: center;
-  background: linear-gradient(135deg, #C4B5FD, #F9A8D4, #FDE68A);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 8px; line-height: 1.2;
-}
-.title-sub { text-align: center; color: var(--dim); font-size: 1rem; margin-bottom: 28px; }
+.title-main{font-family:'Playfair Display',serif;font-size:2.3rem;text-align:center;background:linear-gradient(135deg,#C4B5FD,#F9A8D4,#FDE68A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;line-height:1.2}
+.title-sub{text-align:center;color:var(--dim);font-size:1rem;margin-bottom:26px}
+.char-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin:18px 0}
+.char-card{background:rgba(255,255,255,.05);border:2px solid rgba(139,92,246,.3);border-radius:20px;padding:18px 10px;text-align:center;cursor:pointer;transition:all .25s}
+.char-card:hover{border-color:#8B5CF6;background:rgba(124,58,237,.2);transform:translateY(-4px);box-shadow:0 8px 30px rgba(124,58,237,.3)}
+.ch-emoji{font-size:2.8rem;margin-bottom:7px}
+.ch-name{font-size:.9rem;font-weight:900;color:#C4B5FD;margin-bottom:3px}
+.ch-trait{font-size:.74rem;color:#94A3B8}
+.ch-power{font-size:.72rem;color:#F59E0B;margin-top:5px;font-weight:700}
+.ch-stats{font-size:.7rem;color:#6EE7B7;margin-top:3px;font-weight:700}
 
 /* Ending */
-.ending-card { text-align: center; padding: 36px 24px; }
-.ending-badge { display: inline-block; padding: 6px 20px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-bottom: 16px; }
-.ending-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 16px; line-height: 1.3; }
-.ending-text { font-size: 1rem; line-height: 1.8; color: #CBD5E1; margin-bottom: 28px; }
-.restart-btn {
-  background: linear-gradient(135deg, #7C3AED, #EC4899); border: none; border-radius: 16px;
-  padding: 16px 32px; font-family: 'Nunito', sans-serif; font-size: 1.1rem; font-weight: 900;
-  color: white; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(124,58,237,0.4);
-}
-.restart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,0.5); }
+.ending-card{text-align:center;padding:32px 22px}
+.end-badge{display:inline-block;padding:5px 18px;border-radius:20px;font-size:.82rem;font-weight:800;margin-bottom:14px}
+.end-title{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:14px;line-height:1.3}
+.end-text{font-size:1rem;line-height:1.8;color:#CBD5E1;margin-bottom:26px}
+.end-text p{margin-bottom:12px}
+.restart-btn{background:linear-gradient(135deg,#7C3AED,#EC4899);border:none;border-radius:16px;padding:15px 30px;font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:900;color:#fff;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(124,58,237,.4)}
+.restart-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,58,237,.5)}
 
-/* Particles */
-.particle {
-  position: fixed; pointer-events: none; z-index: 999;
-  border-radius: 50%; animation: particleFall 1.5s ease-in forwards;
-}
-@keyframes particleFall {
-  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-}
+.particle{position:fixed;pointer-events:none;z-index:999;border-radius:50%;animation:pfall 1.5s ease-in forwards}
+@keyframes pfall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes popIn{0%{transform:scale(.8);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.pop-in{animation:popIn .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.shake{animation:shake .3s ease}
 
-@keyframes popIn { 0%{transform:scale(0.8);opacity:0} 70%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
-.pop-in { animation: popIn 0.35s ease; }
-
-@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
-.shake { animation: shake 0.3s ease; }
-
-@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
-.pulse { animation: pulse 0.4s ease; }
-
-@media (max-width: 480px) {
-  .char-grid { grid-template-columns: 1fr; }
-  .title-main { font-size: 1.8rem; }
-  .combatants { grid-template-columns: 1fr auto 1fr; gap: 8px; }
-}
+@media(max-width:480px){.char-grid{grid-template-columns:1fr}.title-main{font-size:1.75rem}.combatants{gap:8px}}
 </style>
 </head>
 <body>
 <div id="stars"></div>
-
 <div id="top-bar">
   <div class="top-left">
     <div id="char-pill"></div>
-    <div id="hp-wrap">
-      ❤️ <div id="hp-bar-outer"><div id="hp-bar"></div></div>
-      <span id="hp-text">10</span>
-    </div>
+    <div id="hp-wrap">❤️<div id="hp-bar-outer"><div id="hp-bar"></div></div><span id="hp-txt">10</span></div>
   </div>
   <div class="top-right">
     <div id="inventory-bar"></div>
-    <button class="sound-btn" id="sound-btn" onclick="toggleSound()" title="Son">🔊</button>
+    <button class="sound-btn" id="snd-btn" onclick="toggleSound()">🔊</button>
   </div>
 </div>
-
 <div id="app"></div>
 
 <script>
-// ══════════════════════════════════════════════════════════════
-// AUDIO ENGINE
-// ══════════════════════════════════════════════════════════════
-let audioCtx = null;
-let musicNodes = [];
-let soundEnabled = true;
-
-function initAudio() {
-  if (!audioCtx) {
-    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { soundEnabled = false; }
-  }
-  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-}
-
-function stopMusic() {
-  musicNodes.forEach(n => { try { n.stop(); } catch(e) {} });
-  musicNodes = [];
-}
-
-function playAmbient(mood) {
-  if (!soundEnabled) return;
-  initAudio();
-  if (!audioCtx) return;
-  stopMusic();
-
-  const master = audioCtx.createGain();
-  master.gain.value = 0.06;
-  master.connect(audioCtx.destination);
-
-  const configs = {
-    forest:  [[55, 'sine', 0.4], [110, 'sine', 0.2], [165, 'sine', 0.15]],
-    dungeon: [[41, 'sine', 0.5], [82, 'triangle', 0.2], [123, 'sine', 0.1]],
-    battle:  [[55, 'sawtooth', 0.15], [110, 'square', 0.1], [220, 'sawtooth', 0.08]],
-    victory: [[262, 'sine', 0.3], [330, 'sine', 0.25], [392, 'sine', 0.2]],
-    mystery: [[46, 'sine', 0.4], [58, 'sine', 0.3], [138, 'sine', 0.1]],
+// ══════════════════════════════════════════════
+// AUDIO
+// ══════════════════════════════════════════════
+let AC=null, musicNodes=[], soundOn=true;
+function initAC(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){soundOn=false}}if(AC&&AC.state==='suspended')AC.resume()}
+function stopMusic(){musicNodes.forEach(n=>{try{n.stop()}catch(e){}});musicNodes=[]}
+function playAmbient(mood){
+  if(!soundOn)return;initAC();if(!AC)return;stopMusic();
+  const master=AC.createGain();master.gain.value=.055;master.connect(AC.destination);
+  const presets={
+    forest:[[55,'sine',.4],[110,'sine',.2],[165,'sine',.12]],
+    dungeon:[[41,'sine',.5],[82,'triangle',.2],[61,'sine',.15]],
+    battle:[[55,'sawtooth',.12],[110,'square',.08],[220,'sawtooth',.06]],
+    victory:[[262,'sine',.3],[330,'sine',.25],[392,'sine',.2],[524,'sine',.15]],
+    mystery:[[46,'sine',.4],[58,'sine',.3],[138,'sine',.1],[69,'triangle',.2]]
   };
-
-  const chosen = configs[mood] || configs.forest;
-  chosen.forEach(([freq, type, vol]) => {
-    const osc = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    const lfo = audioCtx.createOscillator();
-    const lfoGain = audioCtx.createGain();
-
-    lfo.frequency.value = 0.2 + Math.random() * 0.3;
-    lfoGain.gain.value = freq * 0.015;
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
-
-    osc.type = type;
-    osc.frequency.value = freq;
-    g.gain.value = vol;
-    osc.connect(g);
-    g.connect(master);
-
-    lfo.start();
-    osc.start();
-    musicNodes.push(osc, lfo);
+  (presets[mood]||presets.forest).forEach(([freq,type,vol])=>{
+    const osc=AC.createOscillator(),g=AC.createGain(),lfo=AC.createOscillator(),lg=AC.createGain();
+    lfo.frequency.value=.15+Math.random()*.25;lg.gain.value=freq*.012;
+    lfo.connect(lg);lg.connect(osc.frequency);
+    osc.type=type;osc.frequency.value=freq;g.gain.value=vol;
+    osc.connect(g);g.connect(master);lfo.start();osc.start();
+    musicNodes.push(osc,lfo);
   });
 }
-
-function playSFX(type) {
-  if (!soundEnabled) return;
-  initAudio();
-  if (!audioCtx) return;
-
-  const now = audioCtx.currentTime;
-  const sfxs = {
-    click: () => {
-      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-      o.connect(g); g.connect(audioCtx.destination);
-      o.frequency.value = 440; o.type = 'sine';
-      g.gain.setValueAtTime(0.15, now); g.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-      o.start(now); o.stop(now + 0.08);
-    },
-    hit: () => {
-      const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.15, audioCtx.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i/data.length);
-      const src = audioCtx.createBufferSource();
-      const g = audioCtx.createGain();
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'bandpass'; filter.frequency.value = 600;
-      src.buffer = buf; src.connect(filter); filter.connect(g); g.connect(audioCtx.destination);
-      g.gain.value = 0.4;
-      src.start(now);
-    },
-    victory: () => {
-      [523, 659, 784, 1047].forEach((f, i) => {
-        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-        o.connect(g); g.connect(audioCtx.destination);
-        o.frequency.value = f; o.type = 'sine';
-        const t = now + i * 0.12;
-        g.gain.setValueAtTime(0.2, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.25);
-        o.start(t); o.stop(t + 0.25);
-      });
-    },
-    magic: () => {
-      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-      o.connect(g); g.connect(audioCtx.destination);
-      o.frequency.setValueAtTime(440, now);
-      o.frequency.exponentialRampToValueAtTime(880, now + 0.3);
-      o.type = 'sine';
-      g.gain.setValueAtTime(0.15, now); g.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-      o.start(now); o.stop(now + 0.3);
-    },
-    damage: () => {
-      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-      o.connect(g); g.connect(audioCtx.destination);
-      o.frequency.setValueAtTime(300, now);
-      o.frequency.exponentialRampToValueAtTime(80, now + 0.3);
-      o.type = 'sawtooth';
-      g.gain.setValueAtTime(0.2, now); g.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-      o.start(now); o.stop(now + 0.3);
-    },
-    pickup: () => {
-      [880, 1100, 1320].forEach((f, i) => {
-        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-        o.connect(g); g.connect(audioCtx.destination);
-        o.frequency.value = f; o.type = 'sine';
-        const t = now + i * 0.07;
-        g.gain.setValueAtTime(0.1, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
-        o.start(t); o.stop(t + 0.1);
-      });
-    },
-  };
-  (sfxs[type] || sfxs.click)();
+function sfx(type){
+  if(!soundOn)return;initAC();if(!AC)return;
+  const t=AC.currentTime;
+  if(type==='click'){const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.frequency.value=440;o.type='sine';g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+.09);o.start(t);o.stop(t+.09)}
+  else if(type==='hit'){const b=AC.createBuffer(1,AC.sampleRate*.15,AC.sampleRate);const d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);const s=AC.createBufferSource(),g=AC.createGain(),f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=600;s.buffer=b;s.connect(f);f.connect(g);g.connect(AC.destination);g.gain.value=.35;s.start(t)}
+  else if(type==='damage'){const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.frequency.setValueAtTime(280,t);o.frequency.exponentialRampToValueAtTime(80,t+.3);o.type='sawtooth';g.gain.setValueAtTime(.18,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.start(t);o.stop(t+.3)}
+  else if(type==='victory'){[523,659,784,1047].forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.frequency.value=f;o.type='sine';const s=t+i*.12;g.gain.setValueAtTime(.18,s);g.gain.exponentialRampToValueAtTime(.001,s+.28);o.start(s);o.stop(s+.28)})}
+  else if(type==='magic'){const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.frequency.setValueAtTime(440,t);o.frequency.exponentialRampToValueAtTime(880,t+.3);o.type='sine';g.gain.setValueAtTime(.13,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.start(t);o.stop(t+.3)}
+  else if(type==='pickup'){[880,1100,1320].forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.frequency.value=f;o.type='sine';const s=t+i*.07;g.gain.setValueAtTime(.09,s);g.gain.exponentialRampToValueAtTime(.001,s+.1);o.start(s);o.stop(s+.1)})}
 }
+function toggleSound(){soundOn=!soundOn;document.getElementById('snd-btn').textContent=soundOn?'🔊':'🔇';if(!soundOn)stopMusic();else playAmbient(STATE.mood)}
 
-function toggleSound() {
-  soundEnabled = !soundEnabled;
-  document.getElementById('sound-btn').textContent = soundEnabled ? '🔊' : '🔇';
-  if (!soundEnabled) { stopMusic(); } else { playAmbient(STATE.currentMood || 'forest'); }
-}
-
-// ══════════════════════════════════════════════════════════════
-// CHARACTERS
-// ══════════════════════════════════════════════════════════════
-const CHARS = {
-  lea: {
-    name: 'Léa la Courageuse', emoji: '⚔️', short: 'Léa', color: '#F87171',
-    trait: 'Brave et déterminée', power: '⚡ Bonus de combat +2',
-    stats: '⚔️ ATK+2  ❤️ HP: 12', maxHp: 12, atkBonus: 2,
-  },
-  zoe: {
-    name: 'Zoé la Maligne', emoji: '🔮', short: 'Zoé', color: '#818CF8',
-    trait: 'Curieuse et intelligente', power: '🧩 Débloque des chemins cachés',
-    stats: '🧩 PWR+1  ❤️ HP: 10', maxHp: 10, atkBonus: 1,
-  },
-  mia: {
-    name: 'Mia la Gentille', emoji: '🌸', short: 'Mia', color: '#34D399',
-    trait: 'Douce et empathique', power: '💚 Parle aux animaux',
-    stats: '💚 CHARM+3  ❤️ HP: 10', maxHp: 10, atkBonus: 0,
-  },
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+const CHARS={
+  lea:{name:'Léa la Courageuse',emoji:'⚔️',short:'Léa',color:'#F87171',trait:'Brave et déterminée',power:'⚡ Bonus combat +2 · Options d\'action directe',stats:'❤️ HP: 12  ⚔️ ATK: +2',maxHp:12,atkBonus:2},
+  zoe:{name:'Zoé la Maligne',emoji:'🔮',short:'Zoé',color:'#818CF8',trait:'Curieuse et intelligente',power:'🧩 Débloque énigmes et passages cachés',stats:'❤️ HP: 10  ⚔️ ATK: +1',maxHp:10,atkBonus:1},
+  mia:{name:'Mia la Gentille',emoji:'🌸',short:'Mia',color:'#34D399',trait:'Douce et empathique',power:'💚 Parle aux animaux · Apaise les ennemis',stats:'❤️ HP: 10  ✨ Charme: +3',maxHp:10,atkBonus:0},
 };
 
-// ══════════════════════════════════════════════════════════════
-// ITEMS
-// ══════════════════════════════════════════════════════════════
-const ITEMS = {
-  bouclier_courage: { emoji: '🛡️', name: 'Bouclier', desc: 'Réduit les dégâts en combat' },
-  carte_secrete:    { emoji: '🗺️', name: 'Carte secrète', desc: 'Révèle les passages cachés' },
-  fleur_lumiere:    { emoji: '🌺', name: 'Fleur de lumière', desc: 'Guérit la Reine' },
-  cristal_fragment: { emoji: '💎', name: 'Fragment de cristal', desc: 'La moitié manquante' },
-  plume_doree:      { emoji: '🪶', name: 'Plume dorée', desc: 'Écriture magique' },
-  potion_force:     { emoji: '⚗️', name: 'Potion de force', desc: '+3 ATK pendant un combat' },
+const ITEMS={
+  etoile_argent:{e:'⭐',n:'Étoile d\'argent'},
+  plume_doree:{e:'🪶',n:'Plume dorée'},
+  bouclier_feu:{e:'🛡️',n:'Bouclier de feu'},
+  carte_secrete:{e:'🗺️',n:'Carte secrète'},
+  carte_chateau:{e:'🗺️',n:'Carte du château'},
+  fleur_lumiere:{e:'🌺',n:'Fleur de lumière'},
+  fragment_cristal:{e:'💎',n:'Fragment de cristal'},
+  potion_force:{e:'⚗️',n:'Potion de force'},
+  potion_soin:{e:'💊',n:'Potion de soin'},
+  etoile_lac:{e:'🌟',n:'Étoile du lac'},
 };
 
-// ══════════════════════════════════════════════════════════════
-// STORY
-// ══════════════════════════════════════════════════════════════
-const STORY = {
+const S={  // STORY
+  // ──────────────────────────────────────────
+  // ACTE 1 — L'APPEL
+  // ──────────────────────────────────────────
+  start:{mood:'forest',art:'🌙🌟🚪',title:'La nuit de la porte dorée',
+    text:`<p>C'est la nuit la plus chaude de l'été. Tu n'arrives pas à dormir. Par ta fenêtre, tu regardes les étoiles — quand soudain, l'une d'elles tombe. Pas vers le sol. Vers ton jardin.</p>
+<p>Elle s'enfonce dans le vieux chêne… et le chêne s'ouvre. Derrière, une porte dorée pulse doucement, comme un cœur qui bat. Des mots brillent sur le bois en lettres de lumière : <em>"La Forêt des Étoiles a besoin de toi. Mais seulement si tu choisis de venir."</em></p>`,
+    choices:[
+      {icon:'⚡',text:'Pousser la porte sans réfléchir',hint:'Pour les plus courageuses',next:'a2a'},
+      {icon:'🔦',text:'Prendre ta lampe et approcher prudemment',hint:'Curieuse et prudente',next:'a2b'},
+      {icon:'😴',text:'Te pincer le bras — sûrement un rêve',hint:'Aïe ! C\'est bien réel.',next:'a2c'},
+    ]},
 
-  start: {
-    mood: 'forest', art: '🌲✨🌲',
-    title: 'Une nuit pas comme les autres',
-    text: `<p>C'est une nuit d'été douce et silencieuse. Tu t'apprêtes à aller dormir quand soudain… une lumière dorée traverse ta fenêtre et danse sur les murs.</p>
-           <p>Tu te lèves, curieuse. Au fond du jardin, là où pousse le vieux chêne, une <strong>porte dorée</strong> brille dans l'obscurité. Des mots scintillent sur le bois : <em>"La Forêt des Étoiles a besoin de toi."</em></p>`,
-    choices: [
-      { icon: '🚪', text: 'Pousser la porte sans hésiter', hint: 'Pour les plus courageuses', next: 'entree_foret' },
-      { icon: '🔦', text: 'Prendre ta lampe de poche et approcher prudemment', hint: 'Prudente et curieuse', next: 'observer_porte' },
-      { icon: '😴', text: 'Pincer ton bras pour voir si tu rêves', hint: 'Aïe ! C\'est bien réel.', next: 'pincer_bras' },
-    ],
-  },
+  a2c:{mood:'forest',art:'😲✨',title:'Bien réel !',
+    text:`<p>Tu te pinces l'avant-bras. <em>Aïe !</em> Définitivement pas un rêve. La porte s'illumine légèrement, comme si elle riait.</p>
+<p>Une voix douce s'échappe de l'autre côté : <em>"Tu n'as pas besoin d'être sûre. Tu as juste besoin d'y aller."</em></p>`,
+    choices:[{icon:'🔦',text:'Aller voir de plus près avec ta lampe',next:'a2b'},{icon:'🚪',text:'Entrer directement — la voix t\'a convaincue',next:'a2a'}]},
 
-  pincer_bras: {
-    mood: 'forest', art: '😲✨',
-    title: 'Bien réel !',
-    text: `<p>Tu te pinces le bras. <em>Aïe !</em> Ce n'est pas un rêve.</p>
-           <p>La porte s'illumine un peu plus, comme si elle t'encourageait. Une voix douce murmure de l'autre côté : <em>"Je sais que tu as peur. Mais tu es la seule qui peut nous aider."</em></p>`,
-    choices: [
-      { icon: '💪', text: 'Prendre son courage à deux mains et entrer', next: 'entree_foret' },
-      { icon: '🔦', text: 'Observer encore un peu avant', next: 'observer_porte' },
-    ],
-  },
+  a2a:{mood:'forest',art:'🌲✨🌿',title:'L\'entrée directe',
+    text:`<p>La porte s'ouvre avec un doux soupir. De l'autre côté, une forêt impossible — des arbres hauts comme des immeubles, des lumières bleues et dorées qui flottent entre les branches, un ciel rempli d'étoiles si proches qu'on pourrait les toucher.</p>
+<p>L'air sent la cannelle, les fleurs de nuit, et quelque chose d'indéfinissable. La magie, peut-être. Derrière toi, la porte se referme avec un clic doux. <em>Pas de retour en arrière.</em></p>`,
+    choices:[
+      {icon:'🌲',text:'Suivre le chemin de pierres lumineuses',next:'a3'},
+      {icon:'🌟',text:'Explorer les environs d\'abord — quelque chose brille dans un creux d\'arbre',next:'a2a_explore'},
+    ]},
 
-  observer_porte: {
-    mood: 'forest', art: '🔦🚪🦊',
-    title: 'La renarde argentée',
-    text: `<p>Ta lampe éclaire la porte. Elle est couverte de symboles : des étoiles, des lunes, et… une <strong>renarde dessinée en argent</strong> qui semble te regarder.</p>
-           <p>La renarde cligne de l'œil. Puis elle parle : <em>"Enfin ! Je t'attendais depuis trois nuits. La Reine de la Nuit a volé le Cristal des Étoiles. Sans lui, notre forêt va disparaître avant l'aube du quatrième jour."</em></p>`,
-    choices: [
-      { icon: '✨', text: 'Accepter d\'aider sans poser de questions', next: 'entree_foret' },
-      { icon: '❓', text: 'Demander ce qu\'est le Cristal des Étoiles exactement', next: 'explication_cristal' },
-      { icon: '🤔', text: 'Demander pourquoi c\'est TOI qu\'on appelle', next: 'pourquoi_moi' },
-    ],
-  },
+  a2a_explore:{mood:'forest',art:'⭐🌲',title:'La trouvaille',
+    text:`<p>Tu t'approches du vieux chêne creux. À l'intérieur, quelque chose scintille. Tu plonges la main et en ressors une petite étoile en argent, tiède, qui pulse doucement dans ta paume.</p>
+<p><em>"Elle pourrait servir,"</em> penses-tu en la glissant dans ta poche.</p>`,
+    items_given:['etoile_argent'],
+    choices:[{icon:'🌲',text:'Prendre le chemin principal',hint:'⭐ Étoile d\'argent obtenue !',next:'a3'}]},
 
-  explication_cristal: {
-    mood: 'forest', art: '💎🌟',
-    title: 'Le secret du Cristal',
-    text: `<p>La renarde hoche la tête, impressionnée. <em>"Bonne question ! Le Cristal des Étoiles est le cœur de notre forêt. Il capte la lumière des étoiles et la redistribue à tous les êtres vivants — arbres, animaux, ruisseaux. Sans lui, tout s'éteint."</em></p>
-           <p><em>"La Reine de la Nuit n'est pas méchante. Elle souffre. Mais sa douleur menace tout le monde."</em></p>`,
-    choices: [
-      { icon: '🌲', text: 'Entrer dans la forêt pour aider', next: 'entree_foret' },
-    ],
-  },
+  a2b:{mood:'forest',art:'🔦🦊✨',title:'La renarde Lunette',
+    text:`<p>Ta lampe éclaire la porte de près. Elle est couverte de symboles — des étoiles, des lunes, des arbres, et au centre, une renarde dessinée en argent qui semble regarder quelque chose au loin.</p>
+<p>Puis la renarde cligne de l'œil. Elle décolle du bois comme si elle s'éveillait, flotte un instant dans l'air, et atterrit à tes pieds. <em>"Enfin ! Je t'attendais depuis trois nuits."</em></p>
+<p>Elle s'appelle Lunette. En quelques phrases, elle explique tout : la Reine de la Nuit a pris le Cristal des Étoiles — le cœur de la forêt. Sans lui, les arbres s'endormiront un à un. Dans trois jours, la forêt n'existera plus.</p>`,
+    choices:[
+      {icon:'⚔️',text:'"Comment est-ce qu\'on bat la Reine ?"',next:'a2b_combat'},
+      {icon:'🔮',text:'"Qui est vraiment la Reine ?"',next:'a2b_reine'},
+      {icon:'🌸',text:'"Elle souffre ? Qu\'est-ce qui lui manque ?"',next:'a2b_souffre'},
+    ]},
 
-  pourquoi_moi: {
-    mood: 'mystery', art: '🌟👁️',
-    title: 'Pourquoi toi ?',
-    text: `<p>La renarde sourit mystérieusement. <em>"Parce que tu as quelque chose que personne d'autre n'a."</em></p>
-           <p>Elle touche ton cœur du bout de la patte. Une lumière dorée brille un instant.</p>
-           <p><em>"Ici. Un cœur qui cherche à comprendre avant d'agir. La forêt a besoin de quelqu'un comme toi."</em></p>`,
-    items_given: ['plume_doree'],
-    choices: [
-      { icon: '🌟', text: 'Entrer dans la forêt, confiante', hint: '🪶 Tu reçois la Plume dorée !', next: 'entree_foret' },
-    ],
-  },
+  a2b_combat:{mood:'forest',art:'🦊⚔️',title:'Les conseils de Lunette',
+    text:`<p>Lunette soupire doucement. <em>"La combattre... ce n'est pas la bonne question. Elle n'est pas méchante. Elle souffre, profondément. La vaincre ne résoudra rien — du moins, pas seul."</em></p>
+<p>Elle marque une pause. <em>"Mais si tu insistes sur la force : quelque part dans la forêt, un phénix garde un Bouclier de feu. Il peut repousser sa magie sombre."</em> Elle te sourit et disparaît.</p>`,
+    choices:[{icon:'🌲',text:'Entrer dans la forêt',next:'a3'}]},
 
-  entree_foret: {
-    mood: 'forest', art: '🌲🌙🦋',
-    title: 'La Forêt des Étoiles',
-    text: `<p>Tu passes la porte. L'air est frais et sent la cannelle, les fleurs de nuit, et quelque chose d'indéfinissable — comme la magie.</p>
-           <p>Des arbres immenses t'entourent. Leurs branches sont couvertes de <strong>petites lumières bleues et dorées</strong> — comme des milliers de lucioles endormies.</p>
-           <p>Un chemin de pierres luminescentes s'enfonce dans la forêt. Au carrefour devant toi, <strong>trois routes</strong> s'ouvrent, chacune racontant une histoire différente.</p>`,
-    choices: [
-      { icon: '🔥', text: 'La route du feu — tu vois des flammes au loin', hint: 'Chemin de Léa la Courageuse', next: 'lea_feu' },
-      { icon: '🔮', text: 'La route des symboles — des runes brillent sur les arbres', hint: 'Chemin de Zoé la Maligne', next: 'zoe_runes' },
-      { icon: '🌸', text: 'La route des fleurs — tu entends un animal gémir', hint: 'Chemin de Mia la Gentille', next: 'mia_animal' },
-    ],
-  },
+  a2b_reine:{mood:'mystery',art:'🦊🔮',title:'Le secret de la Reine',
+    text:`<p>Lunette baisse la voix. <em>"Elle s'appelait Selena. Avant — avant la malédiction — elle était la gardienne des étoiles. Comme moi je garde les chemins. Belle, curieuse, aimée de toute la forêt."</em></p>
+<p><em>"Il y a cent ans, une sorcière jalouse de sa lumière l'a maudite. La sorcière est morte depuis longtemps, mais la malédiction continue toute seule. Et Selena a changé — lentement — jusqu'à devenir ce qu'on appelle aujourd'hui la Reine de la Nuit."</em></p>
+<p>Lunette te remet une plume dorée. <em>"Garde ça. Elle te rappellera que même les ténèbres ont une histoire."</em></p>`,
+    items_given:['plume_doree'],
+    choices:[{icon:'🌲',text:'Entrer dans la forêt',hint:'🪶 Plume dorée obtenue !',next:'a3'}]},
 
-  // ═══════════════════════════════════════════════
-  // CHEMIN DE LÉA — LA COURAGEUSE
-  // ═══════════════════════════════════════════════
+  a2b_souffre:{mood:'mystery',art:'🦊💔',title:'La douleur de Selena',
+    text:`<p>Lunette te regarde longuement, comme si elle évaluait quelque chose. Puis elle pose sa petite patte sur ta main.</p>
+<p><em>"Ce que tout être vivant veut, au fond. Ne plus être seule. Être vue — pas comme un monstre, pas comme une reine, juste... vue pour ce qu'elle est."</em></p>
+<p><em>"Cent ans de solitude peuvent changer quelqu'un. Mais ça peut aussi se dénouer, si quelqu'un choisit vraiment de regarder."</em></p>
+<p>Elle te glisse une plume dorée dans les mains avant de disparaître.</p>`,
+    items_given:['plume_doree'],
+    choices:[{icon:'🌲',text:'Entrer dans la forêt',hint:'🪶 Plume dorée obtenue !',next:'a3'}]},
 
-  lea_feu: {
-    mood: 'forest', art: '🔥🌲',
-    title: 'Le feu dans la forêt !',
-    text: `<p>Tu suis la lueur des flammes. Dans une clairière, un incendie magique fait rage — mais les arbres ne brûlent pas vraiment, ils s'illuminent comme des torches.</p>
-           <p>Au centre, coincé sous une grosse branche, un <strong>phénix bébé</strong> pleure. Ses larmes éteignent les flammes autour de lui, mais il est épuisé.</p>
-           <p>Trois loups de brume le surveillent en cercle, leurs yeux violets brillants de convoitise.</p>`,
-    choices: [
-      { icon: '⚔️', text: 'Charger les loups pour les chasser', hint: '→ Combat ! Mais tu es seule.', next: 'combat_loups' },
-      { icon: '🔥', text: 'Allumer les flammes magiques pour les effrayer', next: 'lea_feu_flammes' },
-      { icon: '🤫', text: 'Contourner et libérer le phénix discrètement', next: 'lea_feu_discret' },
-    ],
-  },
+  a3:{mood:'forest',art:'🌲🌿🌲',title:'Le carrefour des trois chemins',
+    text:`<p>La forêt s'ouvre sur une clairière circulaire, parfaitement ronde, comme si quelqu'un l'avait dessinée avec un compas. Trois routes partent dans trois directions, chacune marquée d'un arc de pierres lumineuses.</p>
+<p>Tu t'arrêtes. Quelque chose te tire vers l'une d'elles. Pas physiquement — plutôt comme une intuition, une résonance.</p>`,
+    choices:[
+      {icon:'🔥',text:'Le chemin du feu — à droite — tu aperçois des flammes et entends un cri',next:'l1'},
+      {icon:'🔮',text:'Le chemin des runes — au milieu — des symboles lumineux couvrent les arbres',next:'z1'},
+      {icon:'🌸',text:'Le chemin des fleurs — à gauche — un gémissement animal, des empreintes dorées',next:'m1'},
+    ]},
 
-  lea_feu_flammes: {
-    mood: 'forest', art: '🔥✨',
-    title: 'Le cercle de feu',
-    text: `<p>Tu saisis une torche magique accrochée à un arbre et tu tournes autour des loups en faisant de grands gestes. Les flammes crépitent et chantent autour de toi.</p>
-           <p>Les loups reculent, surpris. Mais le plus grand te fixe. <em>"Humaine courageuse,"</em> dit-il d'une voix rauque. <em>"Mais pas assez pour nous trois."</em></p>`,
-    choices: [
-      { icon: '⚔️', text: 'Affronter quand même le chef des loups', hint: '→ Combat 1v1 !', next: 'combat_loup_chef' },
-      { icon: '🏃', text: 'Sprinter vers le phénix pendant qu\'ils hésitent', next: 'lea_sauve_phoenix' },
-    ],
-  },
+  // ──────────────────────────────────────────
+  // ACTE 2A — LÉA
+  // ──────────────────────────────────────────
+  l1:{mood:'forest',art:'🔥🐦‍🔥',title:'Le phénix prisonnier',
+    text:`<p>Tu suis les flammes. Dans une clairière, un incendie magique fait rage — mais les arbres alentour ne brûlent pas, ils s'illuminent comme des torches enchantées.</p>
+<p>Au centre, coincé sous une grosse branche tombée, un <strong>phénix bébé</strong> aux plumes rouge et or gît au sol. Ses yeux violets sont grands ouverts. Il ne crie plus. Il t'attend.</p>
+<p>Trois loups de brume aux yeux phosphorescents tournent en cercle autour de lui, de plus en plus près.</p>`,
+    choices:[
+      {icon:'⚔️',text:'Charger les trois loups directement !',hint:'→ Combat ! Dur mais direct.',next:'cb_loups_3'},
+      {icon:'🔥',text:'Allumer les torches en cercle pour les encercler de feu',next:'l1_encercler'},
+      {icon:'🤫',text:'Se glisser discrètement et libérer le phénix pendant qu\'ils ne regardent pas',next:'l1_discret'},
+    ]},
 
-  lea_feu_discret: {
-    mood: 'forest', art: '🤫🐉',
-    title: 'La discrétion payante',
-    text: `<p>Tu te glisses silencieusement derrière les loups. Ils sont trop concentrés sur le phénix pour te voir.</p>
-           <p>Tu soulèves la branche. Le phénix bondit dans tes bras, chaud comme une bouilloire.</p>
-           <p>Mais un loup se retourne. Il grogne. Il faut fuir ou se battre !</p>`,
-    choices: [
-      { icon: '🏃', text: 'Courir à toute vitesse avec le phénix', next: 'lea_fuite_phoenix' },
-      { icon: '⚔️', text: 'Faire face au loup solitaire', hint: '→ Combat 1v1 plus facile', next: 'combat_loup_seul' },
-    ],
-  },
+  l1_encercler:{mood:'battle',art:'🔥🐺🔥',title:'Le cercle de feu',
+    text:`<p>Tu attrapes une torche magique accrochée à un arbre et tu tournes rapidement autour des loups, allumant les autres torches au passage. Un cercle de flammes les entoure.</p>
+<p>Deux des loups battent en retraite, terrifiés. Mais le chef — un loup immense, aux yeux violets profonds — te fixe. <em>"Humaine courageuse,"</em> gronde-t-il. <em>"Mais pas assez pour moi."</em></p>
+<p>Il saute par-dessus les flammes et t'affronte seul à seul.</p>`,
+    choices:[{icon:'⚔️',text:'L\'affronter !',next:'cb_loup_chef'},{icon:'🏃',text:'Sprinter vers le phénix pendant qu\'il charge',next:'l1_sprint'}]},
 
-  lea_fuite_phoenix: {
-    mood: 'forest', art: '🏃🔥💨',
-    title: 'La course folle',
-    text: `<p>Tu sprintes entre les arbres, le phénix serré contre toi. Son plumage chauffe tes bras.</p>
-           <p>Les loups vous poursuivent, mais le phénix ouvre les yeux et crache une petite flamme qui éblouit vos poursuivants.</p>
-           <p>Tu t'arrêtes, à bout de souffle, dans une clairière dorée. Le phénix se dresse sur ton épaule et chante une mélodie fragile.</p>`,
-    items_given: ['bouclier_courage'],
-    choices: [
-      { icon: '🛡️', text: 'Accepter le bouclier offert par le phénix reconnaissant', hint: '🛡️ Tu reçois le Bouclier de courage !', next: 'lea_village' },
-    ],
-  },
+  l1_sprint:{mood:'forest',art:'🏃🐦‍🔥',title:'Le sprint',
+    text:`<p>Tu plonges sous l'attaque du loup, roules sur le côté, et fonçes vers le phénix. Tu soulèves la branche à la force de tes deux bras. <em>-1 HP.</em></p>
+<p>Le phénix bondit dans tes bras, chaud comme une petite bouillotte. Le loup chef t'observe s'éloigner, surpris par ta témérité. Il ne vous poursuit pas.</p>`,
+    choices:[{icon:'🛡️',text:'Remercier le phénix',next:'l1_win'}]},
 
-  lea_sauve_phoenix: {
-    mood: 'forest', art: '🐉✨',
-    title: 'Sauvé !',
-    text: `<p>Tu bondis vers le phénix, le libères de la branche et tu cours. Les loups hurlent de rage mais ne vous rattrapent pas.</p>
-           <p>Dans la sécurité d'une petite grotte éclairée de cristaux, le phénix te remercie en te tendant une <strong>écaille dorée</strong> qui se transforme en bouclier.</p>`,
-    items_given: ['bouclier_courage'],
-    choices: [
-      { icon: '🌲', text: 'Continuer avec ton nouveau bouclier', hint: '🛡️ Bouclier de courage obtenu !', next: 'lea_village' },
-    ],
-  },
+  l1_discret:{mood:'forest',art:'🤫🐦‍🔥',title:'La discrétion',
+    text:`<p>Tu te glisses silencieusement entre les arbres, contournant les loups qui ont le dos tourné. Ton cœur bat fort. Tu gardes les yeux sur la branche.</p>
+<p>Tu la soulèves doucement. Le phénix te regarde sans faire un bruit — il a compris. Il se love contre toi.</p>
+<p>Un loup se retourne. Vos regards se croisent. Il montre les dents.</p>`,
+    choices:[
+      {icon:'🏃',text:'Courir à toute vitesse !',next:'l1_fuite'},
+      {icon:'⚔️',text:'Faire face au loup seul — les autres n\'ont pas vu',hint:'→ Combat 1v1, plus facile',next:'cb_loup_seul'},
+    ]},
 
-  lea_village: {
-    mood: 'forest', art: '🍄🏘️',
-    title: 'Le village des lutins',
-    text: `<p>Le phénix te guide jusqu'à un minuscule village de champignons géants. Des <strong>lutins</strong> pas plus hauts que ta cheville s'activent partout.</p>
-           <p>Le chef lutin accourt, essoufflé : <em>"Oh ! Une humaine ! Un ogre de brume a volé notre chaudron de magie ! Sans lui on ne peut plus soigner personne !"</em></p>
-           <p>Au fond du village, on entend des bruits de destruction.</p>`,
-    choices: [
-      { icon: '⚔️', text: 'Aller chasser l\'ogre immédiatement', hint: '→ Combat !', next: 'combat_ogre' },
-      { icon: '🧠', text: 'D\'abord observer l\'ogre pour trouver sa faiblesse', next: 'lea_observer_ogre' },
-      { icon: '🤝', text: 'Proposer un échange à l\'ogre', hint: 'Peut-être qu\'il veut autre chose ?', next: 'lea_negocier_ogre' },
-    ],
-  },
+  l1_fuite:{mood:'forest',art:'🏃💨',title:'La fuite',
+    text:`<p>Tu sprintes entre les arbres, le phénix serré contre ta poitrine. Les loups hurlent derrière vous. Mais le phénix ouvre les yeux, crache une petite boule de feu qui explose en lumière aveuglante — les loups perdent votre trace.</p>
+<p>Tu t'arrêtes dans une clairière tranquille, hors d'haleine. Le phénix te regarde avec des yeux reconnaissants.</p>`,
+    choices:[{icon:'🛡️',text:'Accepter la récompense du phénix',next:'l1_win'}]},
 
-  lea_observer_ogre: {
-    mood: 'dungeon', art: '👁️🧌',
-    title: 'Observer avant d\'agir',
-    text: `<p>Tu te caches dans les hautes herbes et tu observes. L'ogre est énorme, mais... il trébuche souvent. Il a une jambe plus faible.</p>
-           <p>Tu notes aussi qu'il s'arrête chaque fois qu'il entend une mélodie douce — il écoute, les yeux perdus dans le vague.</p>
-           <p><em>Information précieuse,</em> penses-tu.</p>`,
-    choices: [
-      { icon: '🎵', text: 'Fredonner une douce mélodie pour le distraire', next: 'lea_melodie_ogre' },
-      { icon: '⚔️', text: 'Viser sa jambe faible en combat', hint: '→ Combat avec avantage +2 !', next: 'combat_ogre_avantage' },
-    ],
-  },
+  l1_win:{mood:'forest',art:'🐦‍🔥🛡️✨',title:'Le Bouclier de feu',
+    text:`<p>Le phénix se dresse sur ton épaule. Il chante trois notes claires, puis touche ta main de son bec. Une de ses écailles dorées se détache et grandit dans tes paumes — un bouclier léger comme une plume, chaud comme le soleil, qui brille d'une lumière orange.</p>
+<p><em>"Sa magie repousse les ombres,"</em> sembles-tu comprendre instinctivement. <em>"Et protège contre les coups les plus forts."</em></p>`,
+    items_given:['bouclier_feu'],
+    choices:[{icon:'🗼',text:'Suivre le phénix vers la tour au fond de la clairière',hint:'🛡️ Bouclier de feu obtenu !',next:'l2'}]},
 
-  lea_melodie_ogre: {
-    mood: 'forest', art: '🎵🧌😢',
-    title: 'La mélodie magique',
-    text: `<p>Tu fredonnes une vieille comptine. L'ogre s'arrête, le chaudron dans les mains. Des larmes coulent sur ses joues.</p>
-           <p><em>"Ma maman me chantait ça,"</em> dit-il d'une voix brisée.</p>
-           <p>Il pose le chaudron doucement. Il explique qu'il voulait utiliser sa magie pour retrouver sa famille perdue.</p>`,
-    choices: [
-      { icon: '💬', text: 'Promettre de l\'aider à chercher sa famille', next: 'lea_ogre_ami' },
-      { icon: '🏃', text: 'Récupérer le chaudron pendant qu\'il pleure', next: 'lea_chaudron_vole' },
-    ],
-  },
+  l2:{mood:'dungeon',art:'🗼🌫️',title:'La tour du gardien oublié',
+    text:`<p>Le phénix te guide vers une vieille tour de pierre couverte de lierre noir. À l'entrée, un chevalier en armure rouillée monte la garde, immobile comme une statue.</p>
+<p>Mais quand tu t'approches, il bouge. Lentement. Sa visière se lève. Des yeux vieux, très vieux, te regardent.</p>
+<p><em>"Qui va là ? Ami ou ennemi de la Reine Selena ?"</em> Il s'est arrêté dans le temps. Il garde ce poste depuis cent ans — sans savoir que la guerre est finie.</p>`,
+    choices:[
+      {icon:'⚔️',text:'Le défier en duel pour passer',hint:'→ Combat difficile. Bouclier utile.',next:'cb_chevalier'},
+      {icon:'💬',text:'Lui expliquer doucement que la guerre est finie',next:'l2_parler'},
+      {icon:'🌟',text:'Lui montrer les étoiles qui s\'éteignent dans le ciel',next:'l2_etoiles'},
+    ]},
 
-  lea_ogre_ami: {
-    mood: 'forest', art: '🧌🤝✨',
-    title: 'Un allié inattendu',
-    text: `<p>L'ogre accepte. Il rend le chaudron aux lutins et te promet d'être ton guide jusqu'au Château de Brume.</p>
-           <p>Les lutins, reconnaissants, te remettent une <strong>potion de force</strong>.</p>
-           <p>L'ogre connaît un raccourci secret vers le château. Avec lui, vous arrivez rapidement.</p>`,
-    items_given: ['potion_force'],
-    choices: [
-      { icon: '🏰', text: 'Partir vers le Château de Brume', hint: '⚗️ Potion de force obtenue !', next: 'chateau_entree_lea' },
-    ],
-  },
+  l2_parler:{mood:'mystery',art:'🗼💬',title:'Cent ans de garde',
+    text:`<p><em>"La guerre est finie ?"</em> Il lâche sa lance. Elle tombe avec un bruit sourd. <em>"Cent ans ? J'ai gardé cent ans pour rien ?"</em></p>
+<p>Il s'effondre sur un rocher. Ses épaules tremblent. Puis il se redresse, la mâchoire serrée. <em>"Non. Pas pour rien. J'ai gardé la forêt contre les envahisseurs. Et maintenant... il y a encore quelque chose à protéger."</em></p>
+<p>Il connaît un raccourci vers le château — un passage creusé dans la roche, que lui seul connaît encore.</p>`,
+    choices:[{icon:'🌲',text:'Suivre le vieux chevalier',next:'r1'}]},
 
-  lea_chaudron_vole: {
-    mood: 'forest', art: '🏃💨',
-    title: 'La récupération rapide',
-    text: `<p>Tu saisis le chaudron et tu cours. L'ogre rugit mais tu es trop rapide.</p>
-           <p>Les lutins ont leur chaudron, mais quelque chose te pèse. <em>C'était peut-être pas la meilleure solution.</em></p>
-           <p>Ils t'indiquent quand même la route du château, reconnaissants.</p>`,
-    choices: [
-      { icon: '🏰', text: 'Vers le Château de Brume', next: 'chateau_entree_lea' },
-    ],
-  },
+  l2_etoiles:{mood:'mystery',art:'🌟🗼',title:'Les étoiles qui s\'éteignent',
+    text:`<p>Tu le prends par le bras et tu lui fais regarder le ciel nocturne. Effectivement — des étoiles clignotent, hésitent, puis s'éteignent une à une.</p>
+<p>Le vieux chevalier reste silencieux longtemps. <em>"Alors quelque chose a changé. La forêt a besoin qu'on agisse."</em></p>
+<p>Sans un mot de plus, il te montre un passage secret creusé dans la roche au pied de la tour.</p>`,
+    choices:[{icon:'🌊',text:'Prendre le raccourci',next:'r1'}]},
 
-  lea_negocier_ogre: {
-    mood: 'forest', art: '🧌💬',
-    title: 'La négociation',
-    text: `<p>Tu t'approches de l'ogre calmement, les mains ouvertes. <em>"Qu'est-ce que tu veux vraiment ?"</em></p>
-           <p>Il te regarde, surpris. <em>"Je veux... trouver ma famille. Perdue depuis l'hiver."</em></p>
-           <p>Tu lui promets de demander à la Reine de la Nuit de t'aider — elle sait tout ce qui se passe dans la forêt.</p>`,
-    items_given: ['potion_force'],
-    choices: [
-      { icon: '🏰', text: 'Partir avec l\'ogre comme guide', hint: '⚗️ Potion de force en échange !', next: 'chateau_entree_lea' },
-    ],
-  },
+  // L3 = R1 (rivière partagée)
+  // L4 = village des lutins
 
-  chateau_entree_lea: {
-    mood: 'dungeon', art: '🏰🌫️⚔️',
-    title: 'Les portes du Château de Brume',
-    text: `<p>Le château apparaît au sommet d'une colline. Ses tours disparaissent dans une brume noire et épaisse.</p>
-           <p>Devant les portes, deux gardes d'ombres — des chevaliers faits de ténèbres — bloquent l'entrée.</p>
-           <p>L'un d'eux prononce d'une voix creuse : <em>"Personne ne passe sans la permission de la Reine."</em></p>`,
-    choices: [
-      { icon: '⚔️', text: 'Affronter les deux gardes !', hint: '→ Combat ! (bouclier utile)', next: 'combat_gardes' },
-      { icon: '🌟', text: 'Utiliser le bouclier du phénix pour les repousser', requires_item: 'bouclier_courage', hint: 'Requiert le 🛡️ Bouclier', next: 'lea_bouclier_gardes' },
-      { icon: '🤫', text: 'Chercher une entrée secrète sur les côtés', next: 'lea_entree_secrete' },
-    ],
-  },
+  l4:{mood:'forest',art:'🍄🧌',title:'Le village des lutins et l\'ogre',
+    text:`<p>Le chemin débouche sur un minuscule village de champignons géants illuminés de l'intérieur. Des lutins pas plus hauts que ta cheville s'agitent dans tous les sens.</p>
+<p>Un ogre de brume est installé au bord du village, le chaudron de magie des lutins serré contre lui. Il est immense, gris, et... il pleure. Dans la boue devant lui, il a dessiné quelque chose avec son doigt — des silhouettes, une famille.</p>
+<p>Le chef lutin accourt vers toi : <em>"Oh ! Une humaine ! Ce monstre a volé notre chaudron ! Sans lui, plus de soins, plus de protection !"</em></p>`,
+    choices:[
+      {icon:'⚔️',text:'Attaquer l\'ogre directement pour récupérer le chaudron',hint:'→ Combat. Difficile. Potion utile si tu en as.',next:'cb_ogre'},
+      {icon:'👁️',text:'Observer l\'ogre avant d\'agir — pourquoi pleure-t-il ?',next:'l4_observer'},
+      {icon:'🤝',text:'Aller lui parler directement',next:'l4_parler'},
+    ]},
 
-  lea_bouclier_gardes: {
-    mood: 'battle', art: '🛡️✨',
-    title: 'La lumière du bouclier',
-    text: `<p>Tu lèves le bouclier du phénix. Une lumière dorée jaillit, aveuglant les gardes d'ombres.</p>
-           <p>Ils poussent un cri silencieux et se dissolvent dans la brume.</p>
-           <p>La porte s'ouvre lentement, comme par magie.</p>`,
-    choices: [
-      { icon: '🏰', text: 'Entrer dans le château', next: 'rencontre_reine_lea' },
-    ],
-  },
+  l4_observer:{mood:'forest',art:'👁️🧌',title:'Ce que tu remarques',
+    text:`<p>Tu te caches dans les hautes herbes et tu observes. L'ogre a une jambe plus faible — il boite. Et chaque fois qu'il entend le vent siffler entre les champignons, il s'arrête et écoute, les yeux perdus dans le vague.</p>
+<p>La silhouette dans la boue : un grand ogre et deux petits. Une famille.</p>`,
+    choices:[
+      {icon:'🎵',text:'Fredonner une mélodie douce — peut-être qu\'il s\'arrêtera',next:'l4_melodie'},
+      {icon:'⚔️',text:'Attaquer en visant sa jambe faible',hint:'→ Combat avec avantage (+2 ATK)',next:'cb_ogre_avantage'},
+    ]},
 
-  lea_entree_secrete: {
-    mood: 'dungeon', art: '🤫🚪',
-    title: 'Le passage secret',
-    text: `<p>Tu contournes le château et trouves une petite fenêtre entrouverte. Tu te faufles à l'intérieur.</p>
-           <p>Tu te retrouves dans une bibliothèque poussiéreuse. Des livres racontent l'histoire de la forêt... et de la Reine.</p>
-           <p>Tu lis vite. La Reine <strong>n'a jamais voulu voler</strong> le cristal. Elle l'a pris pour le protéger d'une malédiction plus ancienne.</p>`,
-    items_given: ['cristal_fragment'],
-    choices: [
-      { icon: '💎', text: 'Chercher la Reine avec cette vérité', hint: '💎 Fragment de cristal trouvé !', next: 'rencontre_reine_lea' },
-    ],
-  },
+  l4_melodie:{mood:'forest',art:'🎵🧌😢',title:'La mélodie',
+    text:`<p>Tu fredonnes une vieille comptine. L'ogre s'arrête. Se retourne. Des larmes coulent sur ses joues de pierre grise.</p>
+<p><em>"Ma maman me chantait ça,"</em> dit-il d'une voix qui ressemble à du gravier mouillé. <em>"Elle est... partie. Mes petits aussi. Je cherchais juste de la magie pour les retrouver."</em></p>
+<p>Il pose le chaudron par terre, les mains tremblantes.</p>`,
+    choices:[
+      {icon:'💬',text:'Promettre de demander à la Reine où sont ses enfants',next:'l4_win_melodie'},
+      {icon:'🏃',text:'Prendre le chaudron pendant qu\'il est distrait',next:'l4_win_vite'},
+    ]},
 
-  rencontre_reine_lea: {
-    mood: 'mystery', art: '👑🌑',
-    title: 'La Reine de la Nuit',
-    text: `<p>Au cœur du château, dans une grande salle illuminée par des étoiles emprisonnées, se tient la <strong>Reine de la Nuit</strong>.</p>
-           <p>Elle est belle et terrible à la fois. Le Cristal des Étoiles brille dans ses mains.</p>
-           <p>Elle te regarde avec lassitude. <em>"Encore quelqu'un venu me prendre ce qui est mien."</em></p>`,
-    choices: [
-      { icon: '⚔️', text: 'Lui demander de remettre le cristal... ou sinon !', next: 'combat_reine' },
-      { icon: '💬', text: 'L\'écouter — pourquoi pense-t-elle que c\'est "le sien" ?', next: 'ecouter_reine' },
-      { icon: '💎', text: 'Lui montrer le fragment trouvé dans la bibliothèque', requires_item: 'cristal_fragment', hint: 'Requiert 💎 Fragment', next: 'fin_magie' },
-    ],
-  },
+  l4_win_melodie:{mood:'forest',art:'🧌🤝✨',title:'L\'accord',
+    text:`<p>L'ogre te regarde longtemps pour voir si tu mens. Il décide de te faire confiance.</p>
+<p>Les lutins récupèrent leur chaudron. Reconnaissants, ils te remettent une <strong>Potion de force</strong> et une <strong>Carte du château</strong> — dessinée de mémoire par leur ancêtre il y a cent ans.</p>`,
+    items_given:['potion_force','carte_chateau'],
+    choices:[{icon:'💎',text:'Continuer vers la Grotte des Cristaux',hint:'⚗️ Potion de force · 🗺️ Carte obtenues !',next:'g1'}]},
 
-  // ═══════════════════════════════════════════════
-  // CHEMIN DE ZOÉ — LA MALIGNE
-  // ═══════════════════════════════════════════════
+  l4_win_vite:{mood:'forest',art:'🏃💨',title:'La récupération express',
+    text:`<p>Tu saisis le chaudron et tu cours. L'ogre rugit, mais tu es déjà loin. Tu le rends aux lutins.</p>
+<p>Ils te remercient, mais quelque chose te pèse. L'ogre avait peut-être une bonne raison. Les lutins t'indiquent la route et te donnent une petite <strong>Carte du château</strong>.</p>`,
+    items_given:['carte_chateau'],
+    choices:[{icon:'💎',text:'Vers la Grotte des Cristaux',next:'g1'}]},
 
-  zoe_runes: {
-    mood: 'mystery', art: '🔮📜',
-    title: 'Les runes mystérieuses',
-    text: `<p>Les runes sur les arbres forment des phrases. Tu les déchiffres une à une — elles racontent une histoire ancienne.</p>
-           <p>Une à une, tu assembles les mots : <em>"La forêt a deux gardiens. Celui du jour. Celui de la nuit. Le cristal les unit."</em></p>
-           <p>Au bout du chemin des runes, une <strong>vieille bibliothèque</strong> creusée dans les racines d'un arbre millénaire.</p>`,
-    choices: [
-      { icon: '📚', text: 'Entrer dans la bibliothèque et lire', next: 'zoe_bibliotheque' },
-      { icon: '🔮', text: 'Continuer à suivre les runes — elles semblent mener plus loin', next: 'zoe_runes_suite' },
-    ],
-  },
+  l4_parler:{mood:'forest',art:'💬🧌',title:'La conversation',
+    text:`<p><em>"Qu'est-ce que tu veux vraiment ?"</em> lui demandes-tu en t'asseyant sur un champignon pour montrer que tu n'es pas menaçante.</p>
+<p>Il te regarde, stupéfait. Personne ne lui avait jamais posé cette question. Il raconte — ses deux petits emportés par une tempête magique, sa femme disparue à sa recherche. Il voulait utiliser la magie du chaudron pour les retrouver.</p>
+<p>Tu lui promets de demander à la Reine de la Nuit — elle voit tout dans la forêt. Il rend le chaudron sans résister. Les lutins te donnent une <strong>Carte du château</strong>.</p>`,
+    items_given:['carte_chateau'],
+    choices:[{icon:'💎',text:'Vers la Grotte des Cristaux',hint:'🗺️ Carte du château obtenue !',next:'g1'}]},
 
-  zoe_runes_suite: {
-    mood: 'mystery', art: '✨🔮✨',
-    title: 'La carte vivante',
-    text: `<p>Les runes te mènent à une clairière où une <strong>carte magique</strong> se dessine dans l'air, faite de lumière.</p>
-           <p>Elle montre le château, avec deux entrées : une porte principale et un <em>passage des rêves</em> accessible seulement à ceux qui "voient avec leur cœur".</p>`,
-    items_given: ['carte_secrete'],
-    choices: [
-      { icon: '📚', text: 'D\'abord la bibliothèque pour comprendre l\'histoire', hint: '🗺️ Carte secrète obtenue !', next: 'zoe_bibliotheque' },
-      { icon: '🏰', text: 'Partir directement au château avec la carte', next: 'chateau_entree_zoe' },
-    ],
-  },
+  // ──────────────────────────────────────────
+  // ACTE 2B — ZOÉ
+  // ──────────────────────────────────────────
+  z1:{mood:'mystery',art:'🔮📜🌲',title:'Les runes de la forêt',
+    text:`<p>Les runes sur les arbres ne sont pas de la décoration. Elles racontent quelque chose. Tu t'arrêtes, tu tends la main vers la première, et les mots arrivent dans ton esprit comme s'ils avaient attendu.</p>
+<p><em>"Il y a deux gardiens dans cette forêt. Celui du jour. Celui de la nuit. Le Cristal les unit — séparés, ni l'un ni l'autre ne peut exister."</em></p>
+<p>Plus loin, les runes continuent. Le chemin des symboles mène à l'entrée d'une bibliothèque creusée dans les racines d'un arbre millénaire.</p>`,
+    choices:[
+      {icon:'📜',text:'Tout lire attentivement — prendre le temps de tout déchiffrer',next:'z1_tout_lire'},
+      {icon:'⚡',text:'Lire en diagonale et foncer vers la bibliothèque',next:'z1_vite'},
+    ]},
 
-  zoe_bibliotheque: {
-    mood: 'mystery', art: '📚🌟',
-    title: 'Les secrets de la bibliothèque',
-    text: `<p>Trois livres t'interpellent. Tu n'as le temps d'en lire qu'un seul complètement.</p>
-           <p>Un livre rouge : <em>Histoire de la Reine Selena</em><br>Un livre bleu : <em>Les deux cristaux jumeaux</em><br>Un livre doré : <em>Comment briser une malédiction</em></p>`,
-    choices: [
-      { icon: '📕', text: 'Lire l\'histoire de la Reine', next: 'zoe_livre_reine' },
-      { icon: '📘', text: 'Lire les cristaux jumeaux', next: 'zoe_livre_cristaux' },
-      { icon: '📒', text: 'Lire comment briser une malédiction', next: 'zoe_livre_malediction' },
-    ],
-  },
+  z1_tout_lire:{mood:'mystery',art:'📜✨',title:'L\'histoire complète',
+    text:`<p>Tu passes une heure à déchiffrer chaque arbre. L'histoire de Selena se déroule devant toi dans son intégralité — sa joie d'autrefois, la sorcière jalouse, la malédiction progressive. Et une dernière rune, à moitié effacée : <em>"Le Cristal a toujours été double."</em></p>
+<p>Au sol entre deux arbres, tu trouves quelque chose que tu n'aurais jamais vu si tu avais couru : une vieille <strong>Carte secrète</strong>, gravée dans une plaque d'argent.</p>`,
+    items_given:['carte_secrete'],
+    choices:[{icon:'📚',text:'Descendre dans la bibliothèque',hint:'🗺️ Carte secrète obtenue !',next:'z2'}]},
 
-  zoe_livre_reine: {
-    mood: 'mystery', art: '📕✨',
-    title: 'La vérité sur Selena',
-    text: `<p>Tu lis avec avidité. Selena n'a jamais été "la Reine de la Nuit". C'était la <strong>gardienne des étoiles</strong>, chargée de veiller sur le cristal.</p>
-           <p>Il y a cent ans, une sorcière jalouse lui a lancé une malédiction : <em>"Ton cœur sera froid comme la nuit jusqu'à ce que quelqu'un te choisisse toi, et non le cristal."</em></p>
-           <p>Voilà pourquoi elle est seule. Voilà pourquoi elle souffre.</p>`,
-    items_given: ['carte_secrete'],
-    choices: [
-      { icon: '🏰', text: 'Partir au château avec cette vérité précieuse', hint: '🗺️ Carte obtenue en cherchant la route', next: 'chateau_entree_zoe' },
-    ],
-  },
+  z1_vite:{mood:'mystery',art:'⚡📚',title:'L\'essentiel',
+    text:`<p>Tu attrapes les grandes lignes en courant : Selena maudite, cristal volé (ou pas ?), forêt en danger. Ça suffit pour l'instant.</p>
+<p>Tu arrives à la bibliothèque plus vite, mais sans la carte cachée entre les racines.</p>`,
+    choices:[{icon:'📚',text:'Entrer dans la bibliothèque',next:'z2'}]},
 
-  zoe_livre_cristaux: {
-    mood: 'mystery', art: '📘💎',
-    title: 'Les deux cristaux',
-    text: `<p>Le livre révèle quelque chose d'extraordinaire : <em>il n'y a pas un cristal, mais deux.</em></p>
-           <p>Un cristal pour le jour. Un cristal pour la nuit. Séparés, ils ne fonctionnent que partiellement.</p>
-           <p>Tu comprends : personne n'a jamais eu tort — la Reine et la forêt ont <em>besoin l'une de l'autre</em>.</p>`,
-    items_given: ['cristal_fragment'],
-    choices: [
-      { icon: '🏰', text: 'Apporter cette découverte à la Reine', hint: '💎 Fragment de cristal trouvé dans le livre !', next: 'chateau_entree_zoe' },
-    ],
-  },
+  z2:{mood:'mystery',art:'📚🕯️',title:'La bibliothèque sous les racines',
+    text:`<p>Un escalier de terre battue descend dans la douceur. En bas : une salle circulaire, des étagères de bois qui montent jusqu'au plafond de racines entremêlées, et des milliers de livres qui brillent doucement comme des lucioles endormies.</p>
+<p>Une bougie flotte seule au centre de la pièce, éclairant trois livres posés sur un pupitre. Une inscription les surmonte : <em>"Tu n'as le temps d'en lire qu'un seul."</em></p>`,
+    choices:[
+      {icon:'📕',text:'"Histoire de Selena, gardienne des étoiles" — couverture rouge',hint:'→ Clé pour Fin Mystère',next:'z2_rouge'},
+      {icon:'📘',text:'"Les deux cristaux jumeaux" — couverture bleue',hint:'→ Clé pour Fin Magique',next:'z2_bleu'},
+      {icon:'📒',text:'"Comment briser une malédiction d\'isolement" — couverture dorée',hint:'→ Clé pour Fin Amitié',next:'z2_or'},
+    ]},
 
-  zoe_livre_malediction: {
-    mood: 'mystery', art: '📒🔮',
-    title: 'Briser la malédiction',
-    text: `<p>Le livre dorée explique : <em>"Une malédiction d'isolement ne se brise pas par la force. Elle se brise par le choix libre de celui qui est maudit."</em></p>
-           <p><em>"Il faut que la Reine CHOISISSE de faire confiance. Personne ne peut le faire à sa place."</em></p>
-           <p>Cette compréhension te semble précieuse — plus que n'importe quelle arme.</p>`,
-    choices: [
-      { icon: '🏰', text: 'Partir au château, prête à écouter vraiment', next: 'chateau_entree_zoe' },
-    ],
-  },
+  z2_rouge:{mood:'mystery',art:'📕✨',title:'Selena avant la nuit',
+    text:`<p>Le livre s'ouvre tout seul. Des images apparaissent entre les lignes — une jeune femme aux cheveux étoilés, riant avec des animaux de la forêt, dansant sous la pluie d'étoiles filantes.</p>
+<p>Tu apprends qui était vraiment Selena : brillante, curieuse, aimée. La gardienne des étoiles qui tissait chaque nuit la lumière du ciel. Et puis la jalousie d'une sorcière. La malédiction. Le silence progressif autour d'elle — ses amis qui partaient, ses animaux qui fuyaient. Cent ans de nuits seules.</p>
+<p>La dernière page, différente des autres : <em>"Je ne suis pas un monstre. Je suis quelqu'un que personne n'a regardé."</em></p>`,
+    choices:[{icon:'🔮',text:'Continuer — l\'esprit du miroir t\'attend',next:'z3'}]},
 
-  chateau_entree_zoe: {
-    mood: 'dungeon', art: '🏰🔮',
-    title: 'Le Château de Brume',
-    text: `<p>Le château est imposant. Mais grâce à ta carte (ou à ce que tu as appris), tu identifies le <strong>passage des rêves</strong> — une arche couverte de fleurs de lune.</p>
-           <p>Une voix te teste : <em>"Dis-moi ce que tu cherches vraiment. Si tu mens, l'arche se ferme."</em></p>`,
-    choices: [
-      { icon: '💬', text: 'Répondre honnêtement : "Je veux aider Selena, pas seulement le cristal."', next: 'zoe_arche_passe' },
-      { icon: '🗺️', text: 'Utiliser la carte pour trouver un autre accès', requires_item: 'carte_secrete', next: 'zoe_passage_secret' },
-      { icon: '🤫', text: 'Répondre : "Je cherche le cristal" (plus simple)', next: 'zoe_arche_bloquee' },
-    ],
-  },
+  z2_bleu:{mood:'mystery',art:'📘💎',title:'Les deux cristaux',
+    text:`<p>La révélation arrive dès la deuxième page : il n'y a pas un cristal, mais deux. Un pour le jour — lumière, chaleur, croissance. Un pour la nuit — rêves, étoiles, repos. Séparés, ni l'un ni l'autre ne fonctionne complètement.</p>
+<p>Le livre raconte comment, lors de la malédiction, le cristal de nuit s'est fracturé. Un fragment s'est caché quelque part dans la forêt. La "Reine de la Nuit" n'a jamais volé un cristal — elle garde depuis cent ans la seule moitié qui lui reste.</p>
+<p>Coincé entre deux pages, tu trouves un éclat de cristal qui chante doucement dans ta main.</p>`,
+    items_given:['fragment_cristal'],
+    choices:[{icon:'🔮',text:'Continuer — l\'esprit du miroir t\'attend',hint:'💎 Fragment de cristal trouvé !',next:'z3'}]},
 
-  zoe_arche_passe: {
-    mood: 'mystery', art: '🌸✨🌸',
-    title: 'L\'arche s\'ouvre',
-    text: `<p>L'arche fleurit. Des milliers de pétales de lune tombent autour de toi.</p>
-           <p>Tu entres dans le château sans résistance. Les gardes t'observent, mais ne bougent pas — tu n'es pas menaçante.</p>
-           <p>La voix murmure : <em>"Bien. Elle comprend."</em></p>`,
-    choices: [
-      { icon: '👑', text: 'Aller trouver la Reine', next: 'rencontre_reine_zoe' },
-    ],
-  },
+  z2_or:{mood:'mystery',art:'📒🔮',title:'Briser la malédiction',
+    text:`<p>Le livre est direct : une malédiction d'isolement ne se brise pas par la force, ni même par la connaissance. Elle ne se brise que si la personne maudite <em>choisit</em> de faire confiance — et ce choix ne peut pas être forcé.</p>
+<p>Il faut que la Reine le veuille. Personne ne peut le faire à sa place. Mais quelqu'un peut créer les conditions pour qu'elle y arrive.</p>
+<p>Cette compréhension te semble plus précieuse que n'importe quelle arme.</p>`,
+    choices:[{icon:'🔮',text:'Continuer — l\'esprit du miroir t\'attend',next:'z3'}]},
 
-  zoe_arche_bloquee: {
-    mood: 'dungeon', art: '🚪❌',
-    title: 'L\'arche se ferme',
-    text: `<p>L'arche se ferme d'un coup. Les fleurs de lune tombent au sol, mortes.</p>
-           <p><em>"Ce n'est pas ce que tu cherches vraiment,"</em> dit la voix. <em>"Réfléchis encore."</em></p>`,
-    choices: [
-      { icon: '💬', text: 'Dire la vérité cette fois', next: 'zoe_arche_passe' },
-    ],
-  },
+  z3:{mood:'mystery',art:'🪞👴',title:'L\'esprit du miroir',
+    text:`<p>Dans un coin de la bibliothèque, un grand miroir ovale, couvert de toiles d'araignées. Tu souffles dessus. Dans le reflet, tu ne vois pas ton visage — tu vois un vieux monsieur aux yeux comme des puits profonds.</p>
+<p><em>"Cent ans que personne ne me regarde,"</em> dit-il. <em>"Tu as droit à trois questions. Choisis bien."</em></p>`,
+    choices:[
+      {icon:'❓',text:'"Qui a maudit Selena ?"',next:'z3_q1'},
+      {icon:'❓',text:'"Comment entrer dans le château sans combat ?"',next:'z3_q2'},
+      {icon:'❓',text:'"Qu\'est-ce que Selena veut vraiment ?"',next:'z3_q3'},
+      {icon:'❓',text:'"Qui es-tu ?"',next:'z3_q4'},
+    ]},
 
-  zoe_passage_secret: {
-    mood: 'dungeon', art: '🗺️🚪',
-    title: 'Le passage caché',
-    text: `<p>Ta carte révèle un panneau de pierre. Tu appuies dessus. Une porte secrète s'ouvre sur un couloir tapissé de miroirs.</p>
-           <p>Dans chaque miroir, tu te vois... mais à des âges différents. À 5 ans. À 20 ans. À 80 ans. Toujours curieuse. Toujours cherchant.</p>
-           <p>Le couloir te mène directement à la salle du trône.</p>`,
-    choices: [
-      { icon: '👑', text: 'Entrer dans la salle du trône', next: 'rencontre_reine_zoe' },
-    ],
-  },
+  z3_q1:{mood:'mystery',art:'🪞✨',title:'La sorcière oubliée',
+    text:`<p><em>"Une sorcière jalouse de la lumière de Selena. Mais la sorcière est morte depuis longtemps. Sa rancœur a continué toute seule — les malédictions de jalousie font ça. Elles n'ont plus besoin d'auteur pour durer."</em></p>`,
+    choices:[{icon:'❓',text:'Poser une deuxième question',next:'z3'},{icon:'🌊',text:'Partir vers la Rivière des Voix',next:'r1'}]},
 
-  rencontre_reine_zoe: {
-    mood: 'mystery', art: '👑📚',
-    title: 'La gardienne des étoiles',
-    text: `<p>La Reine te regarde, surprise. <em>"Tu n'es pas venue te battre."</em></p>
-           <p><em>"Non,"</em> dis-tu. <em>"Je suis venue apprendre. Et peut-être... te demander pourquoi."</em></p>
-           <p>Quelque chose change dans ses yeux. La méfiance laisse place à une tristesse immense.</p>`,
-    choices: [
-      { icon: '💬', text: 'Lui révéler ce que tu sais sur la malédiction', next: 'zoe_revele_malediction' },
-      { icon: '💎', text: 'Lui montrer le fragment de cristal et parler des deux cristaux', requires_item: 'cristal_fragment', next: 'fin_magie' },
-      { icon: '🌟', text: 'Simplement t\'asseoir en face d\'elle et l\'écouter', next: 'ecouter_reine' },
-    ],
-  },
+  z3_q2:{mood:'mystery',art:'🪞🏰',title:'Les trois entrées',
+    text:`<p><em>"Il y a trois façons d'entrer dans le Château de Brume. La porte principale — gardée. Le jardin du souvenir — accessible à ceux qui apportent de la vie. Et le passage des rêves — ouvert seulement à ceux qui n'ont pas peur de voir la vérité en face."</em></p>`,
+    choices:[{icon:'❓',text:'Poser une deuxième question',next:'z3'},{icon:'🌊',text:'Partir vers la Rivière des Voix',next:'r1'}]},
 
-  zoe_revele_malediction: {
-    mood: 'mystery', art: '🔮💔✨',
-    title: 'La vérité libère',
-    text: `<p>Tu lui récites ce que le livre doré t'a appris. La Reine se lève, tremblante.</p>
-           <p><em>"Comment... comment sais-tu ça ?"</em></p>
-           <p><em>"Parce que j'ai cherché à comprendre plutôt qu'à combattre,"</em> dis-tu doucement.</p>
-           <p>Les murs du château tremblent. La malédiction reconnaît quelqu'un qui <em>voit vraiment</em>.</p>`,
-    choices: [
-      { icon: '🌟', text: 'Lui proposer de choisir de faire confiance', next: 'fin_mystere' },
-    ],
-  },
+  z3_q3:{mood:'mystery',art:'🪞💔',title:'Ce que Selena veut',
+    text:`<p>Le vieux monsieur dans le miroir marque une longue pause. <em>"Être vue. Pas sauvée. Pas vaincue. Juste... vue pour ce qu'elle est, au-delà de la malédiction. Personne ne le lui a jamais donné."</em></p>`,
+    choices:[{icon:'❓',text:'Poser une deuxième question',next:'z3'},{icon:'🌊',text:'Partir vers la Rivière des Voix',next:'r1'}]},
 
-  // ═══════════════════════════════════════════════
-  // CHEMIN DE MIA — LA GENTILLE
-  // ═══════════════════════════════════════════════
+  z3_q4:{mood:'mystery',art:'🪞😔',title:'Le bibliothécaire oublié',
+    text:`<p><em>"J'étais le bibliothécaire de la forêt. J'ai passé ma vie à accumuler des secrets plutôt qu'à les partager. Un jour, j'ai regardé dans ce miroir et je ne suis plus ressorti."</em> Il sourit tristement. <em>"Ne fais pas comme moi."</em></p>`,
+    choices:[{icon:'❓',text:'Poser une deuxième question',next:'z3'},{icon:'🌊',text:'Partir vers la Rivière des Voix',next:'r1'}]},
 
-  mia_animal: {
-    mood: 'forest', art: '🦌😢',
-    title: 'Le gémissement dans la nuit',
-    text: `<p>Tu suis le son dans les sous-bois. Une <strong>biche aux yeux dorés</strong> est coincée dans des ronces magiques — noires et épineuses.</p>
-           <p>Elle te regarde avec une confiance totale. <em>"Tu n'as pas peur de moi,"</em> dit-elle d'une voix douce. <em>"Peu d'humains restent quand ils voient une biche qui parle."</em></p>`,
-    choices: [
-      { icon: '💚', text: 'Démêler les ronces avec tes mains', next: 'mia_libere_biche' },
-      { icon: '🌿', text: 'Chercher une plante qui dissout la magie noire', next: 'mia_cherche_plante' },
-      { icon: '🎵', text: 'Chanter une berceuse — peut-être que la magie noire déteste la douceur', next: 'mia_chante_biche' },
-    ],
-  },
+  // z4 = r1, z5 = pont, z6 = g1
 
-  mia_libere_biche: {
-    mood: 'forest', art: '🤝🦌',
-    title: 'Les mains courageuses',
-    text: `<p>Les ronces piquent tes paumes. Mais tu continues. La biche reste parfaitement immobile, te faisant entièrement confiance.</p>
-           <p>La dernière ronce se brise. La biche se relève, secouant sa crinière de lumière.</p>
-           <p><em>"Personne n'avait jamais fait ça pour moi. Je suis Lunette, gardienne des chemins forestiers."</em></p>`,
-    items_given: ['fleur_lumiere'],
-    choices: [
-      { icon: '🌺', text: 'Accepter la fleur de lumière offerte par Lunette', hint: '🌺 Fleur de lumière obtenue !', next: 'mia_avec_biche' },
-    ],
-  },
+  z5:{mood:'mystery',art:'💎🌉',title:'Le pont de cristal',
+    text:`<p>Un pont suspendu au-dessus d'un gouffre sans fond. Les dalles sont de trois types : certaines avec une <strong>étoile dorée</strong> gravée, d'autres avec une <strong>lune grise</strong>, d'autres avec un <strong>soleil</strong>.</p>
+<p>Sur le pilier d'entrée, une inscription : <em>"La vérité avance toujours. Le mensonge trébuche."</em> La lune, dans la pensée de la forêt, représente le doute. Le soleil... tu n'es pas sûre.</p>`,
+    choices:[
+      {icon:'⭐',text:'Ne marcher que sur les dalles étoilées — lentement mais sûrement',next:'z5_etoile'},
+      {icon:'🌙',text:'Alterner étoiles et lunes pour aller plus vite',next:'z5_lune'},
+      {icon:'☀️',text:'Tester d\'abord une dalle soleil — par curiosité',next:'z5_soleil'},
+    ]},
 
-  mia_cherche_plante: {
-    mood: 'forest', art: '🌿✨',
-    title: 'La recherche dans la forêt',
-    text: `<p>Tu cherches dans la forêt. Un vieux hibou t'observe. <em>"La plante que tu cherches pousse là où le sol brille doucement,"</em> dit-il.</p>
-           <p>Tu trouves : une <strong>fleur de lumière</strong> qui n'existe que la nuit. Quand tu la touches, les ronces se dissolvent immédiatement.</p>`,
-    items_given: ['fleur_lumiere'],
-    choices: [
-      { icon: '🦌', text: 'Revenir vers la biche libérée', hint: '🌺 Fleur de lumière obtenue !', next: 'mia_avec_biche' },
-    ],
-  },
+  z5_etoile:{mood:'mystery',art:'⭐🌉',title:'La traversée prudente',
+    text:`<p>Tu avances une dalle à la fois, en choisissant uniquement les étoiles dorées. Certaines dalles lune tremblent légèrement sous ton regard — tu as bien fait de les éviter.</p>
+<p>De l'autre côté, la Grotte des Cristaux scintille devant toi.</p>`,
+    choices:[{icon:'💎',text:'Entrer dans la Grotte',next:'g1'}]},
 
-  mia_chante_biche: {
-    mood: 'forest', art: '🎵🌸',
-    title: 'La magie de la douceur',
-    text: `<p>Tu fredonnes une berceuse d'enfance. Les ronces noires hésitent... puis se rétractent lentement, comme effrayées par la pureté de la mélodie.</p>
-           <p>La biche se libère dans un halo de lumière. Elle te sourit.</p>
-           <p><em>"La douceur est la plus puissante des magies. Les gens l'oublient souvent."</em></p>`,
-    items_given: ['fleur_lumiere'],
-    choices: [
-      { icon: '🦌', text: 'Partir avec Lunette comme guide', hint: '🌺 Une fleur naît là où tu as chanté !', next: 'mia_avec_biche' },
-    ],
-  },
+  z5_lune:{mood:'mystery',art:'💥🌉',title:'La chute partielle',
+    text:`<p>La troisième dalle lune s'effondre sous ton pied. Tu chutes — mais tu attrapes le rebord de la dalle suivante juste à temps. <em>-2 HP.</em></p>
+<p>Tu te hisses, tremblante, et traverses le reste sur les étoiles uniquement. De l'autre côté, tu souffles longuement.</p>`,
+    choices:[{icon:'💎',text:'Entrer dans la Grotte',next:'g1'}]},
 
-  mia_avec_biche: {
-    mood: 'forest', art: '🌸🦌🌲',
-    title: 'Lunette la guide',
-    text: `<p>Lunette t'emmène sur des chemins que tu n'aurais jamais trouvés seule. La forêt t'ouvre ses chemins — les arbres s'écartent, les buissons se courbent.</p>
-           <p>En chemin, vous croisez un jardin secret au cœur d'un lac. Au centre, un <strong>pavillon de cristal</strong> flotte sur l'eau.</p>
-           <p>Lunette murmure : <em>"C'est ici que la Reine venait se reposer, autrefois. Avant qu'elle soit seule."</em></p>`,
-    choices: [
-      { icon: '🌊', text: 'Entrer dans le pavillon pour mieux la comprendre', next: 'mia_pavillon' },
-      { icon: '🏰', text: 'Continuer directement vers le château', next: 'chateau_entree_mia' },
-    ],
-  },
+  z5_soleil:{mood:'mystery',art:'☀️✨',title:'La découverte',
+    text:`<p>Tu poses un pied sur une dalle soleil avec précaution. Elle tient — solide, chaleureuse même. Tu traverses en utilisant étoiles et soleils, evitant les lunes.</p>
+<p>Sur l'autre rive, une petite niche dans la roche contient une <strong>Potion de soin</strong> — comme si la forêt récompensait la curiosité prudente.</p>`,
+    items_given:['potion_soin'],
+    choices:[{icon:'💎',text:'Entrer dans la Grotte',hint:'💊 Potion de soin obtenue !',next:'g1'}]},
 
-  mia_pavillon: {
-    mood: 'mystery', art: '🏛️🌊✨',
-    title: 'Le pavillon des souvenirs',
-    text: `<p>Le pavillon est rempli de souvenirs — des hologrammes de lumière montrent la Reine en train de rire, de danser, d'embrasser des amis.</p>
-           <p>Et puis soudain, tous les hologrammes s'éteignent. Les amis partent. Elle reste seule.</p>
-           <p>Tu comprends. La solitude peut rendre quelqu'un... différent. Blessé.</p>`,
-    choices: [
-      { icon: '🏰', text: 'Aller au château avec cette compréhension', next: 'chateau_entree_mia' },
-    ],
-  },
+  // ──────────────────────────────────────────
+  // ACTE 2C — MIA
+  // ──────────────────────────────────────────
+  m1:{mood:'forest',art:'🦌🌿',title:'La biche dans les ronces noires',
+    text:`<p>Les empreintes dorées te mènent dans les sous-bois. Là, coincée dans des ronces noires magiques — qui ressèrent à chaque mouvement — une <strong>biche aux yeux dorés</strong> attend. Elle ne lutte plus. Elle conserve ses forces.</p>
+<p>Quand elle te voit, ses yeux s'éclairent. <em>"Tu n'as pas reculé,"</em> dit-elle d'une voix aussi douce que de l'eau sur des galets. <em>"La plupart des humains fuient quand ils voient une biche parler."</em></p>`,
+    choices:[
+      {icon:'💚',text:'Démêler les ronces avec tes mains — ça va piquer, mais tant pis',next:'m1_mains'},
+      {icon:'🌿',text:'Chercher une plante dissolvante dans les environs',next:'m1_plante'},
+      {icon:'🎵',text:'Chanter une berceuse — la magie noire déteste peut-être la douceur',next:'m1_chanter'},
+    ]},
 
-  chateau_entree_mia: {
-    mood: 'dungeon', art: '🏰🌺',
-    title: 'Le jardin du château',
-    text: `<p>Lunette connaît un chemin par le jardin du château — il était autrefois magnifique, mais maintenant tout y est gris et sans vie.</p>
-           <p>À la porte du jardin, un <strong>garde-dragon</strong> de brume vous barre la route. Il crache un souffle froid.</p>`,
-    choices: [
-      { icon: '💚', text: 'Parler au dragon — peut-être qu\'il obéit par peur, pas par choix', next: 'mia_parle_dragon' },
-      { icon: '🌺', text: 'Poser la fleur de lumière devant lui en offrande', requires_item: 'fleur_lumiere', next: 'mia_dragon_fleur' },
-      { icon: '🦌', text: 'Demander à Lunette de s\'en occuper', next: 'mia_dragon_lunette' },
-    ],
-  },
+  m1_mains:{mood:'forest',art:'🤝🦌',title:'Les mains courageuses',
+    text:`<p>Les ronces piquent tes paumes. Tu continues. La biche reste parfaitement immobile, te faisant entièrement confiance.</p>
+<p>La dernière ronce se brise. La biche se relève dans un halo de lumière et secoue sa crinière. Elle te regarde tes mains blessées et les touche de son museau — les égratignures disparaissent.</p>
+<p><em>"Personne n'avait jamais fait ça pour moi."</em> Elle te tend une fleur que tu n'avais pas vue — nichée dans ses plumes. Une fleur de lumière.</p>`,
+    items_given:['fleur_lumiere'],
+    choices:[{icon:'🦌',text:'Partir avec Lunette comme guide',hint:'🌺 Fleur de lumière obtenue !',next:'m1_guide'}]},
 
-  mia_parle_dragon: {
-    mood: 'dungeon', art: '🐉💬',
-    title: 'La conversation avec le dragon',
-    text: `<p>Tu t'approches sans peur. Le dragon recule, surpris. <em>"Tu... tu n'as pas peur ?"</em></p>
-           <p><em>"Non. Tu souffres, toi aussi ?"</em></p>
-           <p>Le dragon baisse la tête. Il garde ce château depuis cent ans, sans jamais qu'on lui demande comment il allait. Il s'écarte.</p>`,
-    choices: [
-      { icon: '🏰', text: 'Entrer dans le château', next: 'rencontre_reine_mia' },
-    ],
-  },
+  m1_plante:{mood:'forest',art:'🦉🌺',title:'La fleur de lumière',
+    text:`<p>Un vieux hibou dans un arbre ouvre un œil. <em>"La plante que tu cherches pousse là où le sol brille doucement de lui-même,"</em> dit-il avant de refermer l'œil.</p>
+<p>Tu cherches. Tu trouves — une <strong>Fleur de lumière</strong> dont les pétales pulsent d'une lumière dorée. Tu la poses sur les ronces noires. Elles se dissolvent en fumée bleue.</p>
+<p>La biche est libre. Elle s'incline, puis te remet une autre fleur de lumière, née là où la première a touché le sol.</p>`,
+    items_given:['fleur_lumiere'],
+    choices:[{icon:'🦌',text:'Partir avec la biche comme guide',hint:'🌺 Fleur de lumière obtenue !',next:'m1_guide'}]},
 
-  mia_dragon_fleur: {
-    mood: 'forest', art: '🌺🐉✨',
-    title: 'La fleur de lumière',
-    text: `<p>Tu poses la fleur devant le dragon. Sa lumière dorée l'enveloppe doucement.</p>
-           <p>Les écailles grises du dragon reprennent leur couleur — un vert émeraude magnifique. Il sourit pour la première fois depuis un siècle.</p>
-           <p>Il s'incline et s'écarte.</p>`,
-    choices: [
-      { icon: '🏰', text: 'Entrer dans le château', next: 'rencontre_reine_mia' },
-    ],
-  },
+  m1_chanter:{mood:'forest',art:'🎵🌸✨',title:'La mélodie dissolvante',
+    text:`<p>Tu fredonnes une berceuse d'enfance. Les ronces noires hésitent. Puis se rétractent lentement, comme si elles ne savaient pas comment répondre à quelque chose d'aussi doux.</p>
+<p>La biche regarde les ronces disparaître, stupéfaite. <em>"La douceur est la plus puissante des magies. Les gens l'oublient souvent."</em></p>
+<p>Là où tu as chanté, une petite fleur pousse — une fleur de lumière, née de ta mélodie. Elle est à toi.</p>
+<p>La biche ajoute : <em>"Cette douceur que tu as — elle peut toucher la Reine là où personne n'a réussi à l'atteindre."</em></p>`,
+    items_given:['fleur_lumiere'],
+    choices:[{icon:'🦌',text:'Partir avec la biche comme guide',hint:'🌺 Fleur de lumière + info clé obtenus !',next:'m1_guide'}]},
 
-  mia_dragon_lunette: {
-    mood: 'forest', art: '🦌🐉',
-    title: 'Lunette intervient',
-    text: `<p>Lunette s'avance et touche le museau du dragon de sa tête. Ils se regardent longuement.</p>
-           <p><em>"Nous sommes tous les deux des gardiens,"</em> dit-elle. <em>"Et tous les deux oubliés."</em></p>
-           <p>Le dragon s'écarte en silence, la tête basse.</p>`,
-    choices: [
-      { icon: '🏰', text: 'Entrer dans le château', next: 'rencontre_reine_mia' },
-    ],
-  },
+  m1_guide:{mood:'forest',art:'🌸🦌🌲',title:'Lunette la guide',
+    text:`<p>La biche se présente : elle s'appelle <strong>Lunette</strong>. Elle connaît chaque centimètre de la forêt — les chemins que personne n'emprunte, les raccourcis que les cartes n'ont jamais répertoriés.</p>
+<p>Avec elle, la forêt semble s'ouvrir autour de toi. Les buissons s'écartent, les branches se lèvent. Vous avancez en harmonie.</p>`,
+    choices:[{icon:'🍄',text:'Vers le village des lutins',next:'m2'},{icon:'🌊',text:'Vers le lac et le pavillon',next:'m3'}]},
 
-  rencontre_reine_mia: {
-    mood: 'mystery', art: '👑💔',
-    title: 'La Reine blessée',
-    text: `<p>La Reine de la Nuit se tient dans sa grande salle, dos à toi, regardant par une fenêtre les étoiles qui s'éteignent une à une.</p>
-           <p><em>"Je sais pourquoi tu es là,"</em> dit-elle sans se retourner. <em>"Tu veux le cristal. Comme tous les autres."</em></p>
-           <p>Sa voix est cassée. Comme quelqu'un qui a trop pleuré.</p>`,
-    choices: [
-      { icon: '💬', text: 'Dire doucement : "Je suis venue te voir, toi."', next: 'mia_voir_elle' },
-      { icon: '🌺', text: 'Lui offrir silencieusement la fleur de lumière', requires_item: 'fleur_lumiere', next: 'fin_nature' },
-      { icon: '🤗', text: 'S\'approcher doucement et s\'asseoir près d\'elle', next: 'ecouter_reine' },
-    ],
-  },
+  m2:{mood:'forest',art:'🍄🧌🌸',title:'Le village des lutins et l\'ogre (version Mia)',
+    text:`<p>Lunette entre dans le village la tête haute. Les lutins se figent. Et l'ogre, lui aussi, recule d'un pas. Il reconnaît la biche — une gardienne de la forêt. Il lâche légèrement le chaudron.</p>
+<p><em>"Je... je ne voulais pas de problèmes,"</em> dit-il, plus petit qu'il n'est.</p>`,
+    choices:[
+      {icon:'🌸',text:'Écouter l\'ogre raconter pourquoi il a pris le chaudron',next:'m2_ecouter'},
+      {icon:'🤝',text:'Demander à Lunette de lui parler dans sa langue',next:'m2_lunette'},
+      {icon:'💚',text:'Rester silencieuse et le laisser parler jusqu\'au bout',next:'m2_silence'},
+    ]},
 
-  mia_voir_elle: {
-    mood: 'mystery', art: '💔✨',
-    title: 'Enfin vue',
-    text: `<p>La Reine se retourne enfin. Ses yeux cherchent un mensonge dans les tiens. Il n'y en a pas.</p>
-           <p><em>"Personne n'a jamais dit ça,"</em> murmure-t-elle. <em>"Cent ans. Personne."</em></p>
-           <p>Elle lâche le Cristal. Il tombe doucement, comme en apesanteur.</p>`,
-    choices: [
-      { icon: '🌸', text: 'Rester avec elle un moment avant de partir', next: 'fin_amitie' },
-      { icon: '🌺', text: 'Lui offrir la fleur de lumière', requires_item: 'fleur_lumiere', next: 'fin_nature' },
-    ],
-  },
+  m2_ecouter:{mood:'forest',art:'💬🧌',title:'L\'histoire de l\'ogre',
+    text:`<p>L'ogre raconte. Sa voix grave tremble. Ses deux petits ont disparu pendant une tempête magique il y a trois hivers. Il a tout essayé. Il pensait que la magie du chaudron des lutins pourrait créer une potion de localisation.</p>
+<p>Tu promets de demander à la Reine — elle voit tout dans la forêt. L'ogre rend le chaudron. Les lutins, soulagés, te remettent une <strong>Carte du château</strong>.</p>`,
+    items_given:['carte_chateau'],
+    choices:[{icon:'🌊',text:'Continuer avec Lunette',hint:'🗺️ Carte du château obtenue !',next:'m3'}]},
 
-  // ═══════════════════════════════════════════════
+  m2_lunette:{mood:'forest',art:'🦌🧌💬',title:'Deux gardiens',
+    text:`<p>Lunette s'avance et touche le museau de l'ogre de son front. Un long silence. <em>"Nous sommes tous les deux des gardiens,"</em> dit-elle doucement. <em>"Et tous les deux, nous avons perdu quelque chose."</em></p>
+<p>L'ogre pose le chaudron par terre sans un mot. Les lutins récupèrent leur bien. En échange, ils te remettent une <strong>Carte du château</strong>. L'ogre, lui, se joint à votre groupe pour un temps.</p>`,
+    items_given:['carte_chateau'],
+    choices:[{icon:'🌊',text:'Vers le lac',hint:'🗺️ Carte du château obtenue !',next:'m3'}]},
+
+  m2_silence:{mood:'forest',art:'🤫🧌',title:'Le silence qui suffit',
+    text:`<p>Tu ne dis rien. Tu t'assieds. Tu attends. Lunette fait pareil. L'ogre vous regarde, perdu — personne ne l'a jamais laissé parler sans l'interrompre.</p>
+<p>Il parle. Longtemps. Et à la fin, il pose le chaudron par terre lui-même. <em>"Ça fait du bien,"</em> dit-il simplement.</p>
+<p>Les lutins, les larmes aux yeux, te donnent une <strong>Carte du château</strong>. L'ogre propose de t'escorter jusqu'à l'entrée.</p>`,
+    items_given:['carte_chateau'],
+    choices:[{icon:'🌊',text:'Vers le lac avec ta petite troupe',hint:'🗺️ Carte du château obtenue !',next:'m3'}]},
+
+  m3:{mood:'mystery',art:'🌊🏛️',title:'Le lac et le pavillon des souvenirs',
+    text:`<p>Lunette t'emmène sur un chemin que personne d'autre ne connaît, au bord d'un lac immobile, noir comme un miroir. Au centre du lac, un pavillon de verre flotte sur l'eau sans logique apparente, illuminé de l'intérieur d'une lumière chaude.</p>`,
+    choices:[
+      {icon:'🚶',text:'Traverser sur les nénuphars géants et entrer dans le pavillon',next:'m3_entrer'},
+      {icon:'🔍',text:'Observer depuis le bord sans approcher',next:'m3_observer'},
+      {icon:'🌸',text:'Poser ta fleur de lumière sur l\'eau comme offrande',requires_item:'fleur_lumiere',next:'m3_fleur'},
+    ]},
+
+  m3_entrer:{mood:'mystery',art:'🏛️✨',title:'Les souvenirs de Selena',
+    text:`<p>Le pavillon est rempli d'hologrammes de lumière dorée — des scènes de la vie de Selena. Elle rit avec des amis. Elle tisse des étoiles de ses doigts. Elle danse sous la pluie de météores.</p>
+<p>Puis les images changent. Ses amis partent. Les animaux fuient. Le silence s'installe, puis s'éternise. La dernière image : elle seule, assise au milieu d'un château vide, serrant le Cristal contre elle comme si c'était la dernière chose vivante dans son monde.</p>
+<p>Tu comprends quelque chose de très important : elle n'est pas méchante. Elle a eu terriblement peur d'être invisible.</p>`,
+    choices:[{icon:'🏰',text:'Partir vers le château',next:'c1'}]},
+
+  m3_observer:{mood:'mystery',art:'🌊👁️',title:'Depuis le bord',
+    text:`<p>Tu aperçois les hologrammes de loin — des silhouettes lumineuses, des scènes de bonheur et de solitude. L'essentiel passe, même à distance.</p>`,
+    choices:[{icon:'🏰',text:'Partir vers le château',next:'c1'}]},
+
+  m3_fleur:{mood:'mystery',art:'🌺🌊🌟',title:'L\'étoile du lac',
+    text:`<p>Tu poses la fleur à la surface de l'eau. Elle flotte un instant, puis le lac réagit — une onde douce, puis une étoile tombe du ciel et se pose dans l'eau sans couler, brillant doucement.</p>
+<p>Tu la ramasses. Elle est tiède dans ta paume. <em>Un cadeau du lac pour quelqu'un qui donne sans rien demander.</em></p>`,
+    items_given:['etoile_lac'],
+    choices:[{icon:'🏰',text:'Vers le château',hint:'🌟 Étoile du lac obtenue !',next:'c1'}]},
+
+  // ──────────────────────────────────────────
   // SCÈNES PARTAGÉES
-  // ═══════════════════════════════════════════════
+  // ──────────────────────────────────────────
+  r1:{mood:'mystery',art:'🌊🎵',title:'La Rivière des Voix',
+    text:`<p>La rivière chante. Pas comme de l'eau normale — des voix émergent du courant, claires et contradictoires. <em>"Va à droite !"</em> <em>"Non, à gauche !"</em> <em>"Fais demi-tour !"</em></p>
+<p>Sur une pierre plate à l'entrée de la rivière, des mots gravés : <em>"La vérité vient toujours du fond."</em></p>`,
+    choices:[
+      {icon:'👇',text:'Écouter la voix la plus grave, celle des profondeurs',next:'r1_fond'},
+      {icon:'🏃',text:'Ignorer toutes les voix et traverser vite',next:'r1_vite'},
+      {icon:'🎵',text:'Chanter plus fort que les voix pour les faire taire',requires_item:'plume_doree',next:'r1_chanter'},
+    ]},
 
-  ecouter_reine: {
-    mood: 'mystery', art: '👑💬✨',
-    title: 'La vérité de la Reine',
-    text: `<p>La Reine commence à parler. Lentement. Puis de plus en plus vite, comme si les mots avaient attendu cent ans.</p>
-           <p>Elle raconte tout — la malédiction, la solitude, comment elle avait pris le cristal pour le "protéger" mais en réalité pour ne pas être seule.</p>
-           <p><em>"Si le cristal éclaire tout le monde... alors tout le monde vit. Et moi je regarde."</em></p>`,
-    choices: [
-      { icon: '🌟', text: 'Lui proposer de partager sa lumière avec elle aussi', next: 'fin_amitie' },
-      { icon: '💎', text: 'Lui montrer que le cristal a toujours eu deux moitiés', requires_item: 'cristal_fragment', next: 'fin_magie' },
-    ],
-  },
+  r1_fond:{mood:'mystery',art:'🌊⭐',title:'La voix du fond',
+    text:`<p>Tu fermes les yeux et écoutes. La voix grave dit : <em>"Pose tes pieds uniquement sur les pierres argentées."</em></p>
+<p>Tu traverses sans te mouiller. La rivière, comme reconnaissante, dépose à tes pieds une plume dorée si tu n'en as pas encore.</p>`,
+    items_given_conditional:'plume_doree',
+    choices:[{icon:'💎',text:'Continuer vers la Grotte des Cristaux',next:'g1'},{icon:'🍄',text:'Prendre le chemin du village des lutins',next:'l4'}]},
 
-  // ═══════════════════════════════════════════════
+  r1_vite:{mood:'mystery',art:'💦😅',title:'L\'éclaboussure',
+    text:`<p>Tu sprintes. Une pierre glisse sous ton pied. Tu tombes à genoux dans l'eau froide — <em>-1 HP</em>. Mais des petits poissons lumineux surgissent et te poussent vers la rive opposée, leurs nageoires scintillantes.</p>
+<p>Sur l'autre rive, tu t'ébroues. La rivière rit doucement.</p>`,
+    choices:[{icon:'💎',text:'Vers la Grotte des Cristaux',next:'g1'},{icon:'🍄',text:'Vers le village des lutins',next:'l4'}]},
+
+  r1_chanter:{mood:'mystery',art:'🎵🌊🌟',title:'Le silence magique',
+    text:`<p>Tu chantes plus fort. Les voix s'arrêtent une à une, comme si elles ne savaient pas quoi faire de ta mélodie. La rivière s'apaise. Un chemin de pierres argentées émerge juste sous la surface.</p>
+<p>Tu traverses à pied sec. Sur l'autre rive, la rivière te souffle : <em>"Le château a une entrée secrète au nord, là où pousse une vigne aux fleurs de lune."</em></p>`,
+    choices:[{icon:'💎',text:'Vers la Grotte des Cristaux',next:'g1'},{icon:'🍄',text:'Vers le village des lutins',next:'l4'}]},
+
+  g1:{mood:'dungeon',art:'💎🌈',title:'La Grotte des Cristaux',
+    text:`<p>La grotte est un rêve éveillé — des murs de cristaux multicolores qui projettent des arcs-en-ciel dans tous les sens. Mais le sol est un piège : une grille de dalles, certaines marquées d'une <strong>étoile dorée</strong> (solide), d'autres d'une <strong>lune grise</strong> (danger). Un papillon de lumière flotte à l'entrée, patient.</p>`,
+    choices:[
+      {icon:'🦋',text:'Suivre le papillon pas à pas',next:'g1_papillon'},
+      {icon:'⭐',text:'Ne marcher que sur les étoiles dorées, très lentement',next:'g1_etoile'},
+      {icon:'⚡',text:'Courir en diagonale — le plus vite possible',next:'g1_sprint'},
+    ]},
+
+  g1_papillon:{mood:'dungeon',art:'🦋💎✨',title:'Guidée par le papillon',
+    text:`<p>Le papillon avance d'une dalle à la fois. Tu le suis exactement. Il évite les lunes avec une grâce naturelle.</p>
+<p>De l'autre côté, dans une alcôve, un éclat de cristal chante doucement. Le papillon se pose dessus, puis sur ta main, puis s'envole — transformé en une minuscule fée qui s'incline et disparaît.</p>`,
+    items_given:['fragment_cristal'],
+    choices:[{icon:'🏰',text:'Vers le Château de Brume',hint:'💎 Fragment de cristal obtenu !',next:'c1'}]},
+
+  g1_etoile:{mood:'dungeon',art:'⭐💎',title:'La traversée prudente',
+    text:`<p>Tu avances avec une patience infinie. Une dalle à la fois. Quelques dalles lune tremblent à ton approche — tu as bien fait.</p>
+<p>De l'autre côté, le fragment de cristal t'attend dans une alcôve, comme s'il savait que tu viendrais.</p>`,
+    items_given:['fragment_cristal'],
+    choices:[{icon:'🏰',text:'Vers le Château de Brume',hint:'💎 Fragment de cristal obtenu !',next:'c1'}]},
+
+  g1_sprint:{mood:'dungeon',art:'💥🌑',title:'Le tunnel secret',
+    text:`<p>Tu fonces. Une dalle lune s'effondre sous ton pied droit — tu tombes dans un tunnel sombre en dessous. <em>-2 HP.</em></p>
+<p>Mais le tunnel t'amène directement au cœur de la grotte. Sur le sol, le fragment de cristal, comme posé là exprès.</p>`,
+    items_given:['fragment_cristal'],
+    choices:[{icon:'🏰',text:'Vers le Château de Brume',hint:'💎 Fragment de cristal obtenu !',next:'c1'}]},
+
+  // ──────────────────────────────────────────
+  // ACTE 3 — LE CHÂTEAU
+  // ──────────────────────────────────────────
+  c1:{mood:'dungeon',art:'🏰🌫️',title:'Le Château de Brume',
+    text:`<p>Le château se dresse sur une colline noire. Ses tours montent dans les nuages. La brume qui l'entoure est vivante — elle forme des visages qui te regardent, des mains qui s'étirent vers toi, puis se dissolvent.</p>
+<p>Trois accès s'offrent à toi.</p>`,
+    choices:[
+      {icon:'⚔️',text:'La porte principale — deux gardes d\'ombres barrent l\'entrée',hint:'→ Combat difficile',next:'cb_gardes'},
+      {icon:'🗺️',text:'Utiliser ta carte pour trouver le passage secret',requires_item:'carte_secrete',next:'c1_carte_s'},
+      {icon:'🗺️',text:'Utiliser la Carte du château pour trouver le passage secret',requires_item:'carte_chateau',next:'c1_carte_c'},
+      {icon:'🌸',text:'Le jardin du souvenir — tu sens la vie de l\'autre côté du mur',requires_item:'fleur_lumiere',next:'c1_jardin'},
+      {icon:'🌟',text:'L\'énigme de la porte — une voix te demande ce que tu cherches vraiment',next:'c1_enigme'},
+    ]},
+
+  c1_carte_s:{mood:'dungeon',art:'🗺️🚪✨',title:'Le passage des rêves',
+    text:`<p>La carte secrète montre un panneau de pierre, au nord du château, sous une vigne aux fleurs de lune. Tu trouves le panneau, tu appuies — une porte s'ouvre en silence sur un couloir tapissé de miroirs.</p>
+<p>Dans chaque miroir, tu te vois à des âges différents. Toujours curieuse. Toujours cherchant. Le couloir te mène directement à la bibliothèque de la Reine.</p>`,
+    choices:[{icon:'📚',text:'Entrer dans la bibliothèque de la Reine',next:'c2b'}]},
+
+  c1_carte_c:{mood:'dungeon',art:'🗺️🚪',title:'Le passage nord',
+    text:`<p>La carte indique un passage discret dans les fondations, au nord. Tu le trouves facilement — une petite porte de bois, non gardée. Tu entres dans le château sans bruit.</p>`,
+    choices:[{icon:'👑',text:'Chercher la Reine',next:'c3'}]},
+
+  c1_jardin:{mood:'forest',art:'🌸🏰🌸',title:'Le jardin du souvenir',
+    text:`<p>Tu longes le mur et trouves une porte de jardin, rouillée depuis longtemps. Mais quand tu t'approches avec la fleur de lumière, les plantes grises autour de toi commencent à verdoyer. Un à un, les buissons reprennent des couleurs. Un chemin s'ouvre.</p>
+<p>Tu traverses le jardin en fleur jusqu'à une porte intérieure — non gardée. Le château lui-même semble te laisser entrer.</p>`,
+    choices:[{icon:'🌸',text:'Vers la chambre des souvenirs',next:'c2c'}]},
+
+  c1_enigme:{mood:'mystery',art:'🚪❓',title:'La question de la porte',
+    text:`<p>Tu t'approches de la porte principale. Avant que tu n'atteignes les gardes, une voix émane de la pierre elle-même.</p>
+<p><em>"Qu'est-ce que tu cherches vraiment ?"</em></p>`,
+    choices:[
+      {icon:'💎',text:'"Le Cristal des Étoiles."',next:'c1_enigme_cristal'},
+      {icon:'💬',text:'"Comprendre pourquoi Selena souffre."',next:'c1_enigme_selena'},
+      {icon:'🌟',text:'"Aider la forêt — et peut-être Selena aussi."',next:'c1_enigme_vrai'},
+    ]},
+
+  c1_enigme_cristal:{mood:'dungeon',art:'🚪❌',title:'La porte reste fermée',
+    text:`<p>La porte ne bouge pas. Les gardes te regardent. <em>"Ce n'est pas ce que tu cherches vraiment,"</em> murmure la voix. <em>"Essaie encore."</em></p>`,
+    choices:[{icon:'💬',text:'"Non. Je cherche... à comprendre."',next:'c1_enigme_vrai'},{icon:'⚔️',text:'Affronter les gardes',next:'cb_gardes'}]},
+
+  c1_enigme_selena:{mood:'mystery',art:'🚪✨',title:'La porte s\'entrouvre',
+    text:`<p>La porte commence à s'ouvrir. Pas complètement. <em>"Presque,"</em> dit la voix. <em>"Mais il y a autre chose, non ?"</em></p>`,
+    choices:[{icon:'🌟',text:'"Et l\'aider, elle aussi — pas seulement la forêt."',next:'c1_enigme_vrai'}]},
+
+  c1_enigme_vrai:{mood:'mystery',art:'🚪🌟✨',title:'La porte s\'ouvre',
+    text:`<p>La porte s'ouvre en grand. Les gardes s'écartent sans un mot — comme si la porte elle-même avait donné l'ordre.</p>
+<p>La voix murmure une dernière fois : <em>"Elle aussi, elle cherche quelque chose. Peut-être que vous pouvez vous aider mutuellement."</em></p>`,
+    choices:[{icon:'👑',text:'Entrer dans le château',next:'c3'}]},
+
+  c2a:{mood:'dungeon',art:'⚔️🎭',title:'La salle d\'armes',
+    text:`<p>Des armures vides bordent la salle, figées dans des poses de combat. Au centre, un mannequin d'entraînement magique tourne lentement sur lui-même.</p>
+<p><em>"La Reine ne reçoit que ceux qu'elle respecte,"</em> dit une voix sans corps. <em>"Prouve que tu mérites son attention."</em></p>`,
+    choices:[
+      {icon:'⚔️',text:'Accepter le duel d\'entraînement',next:'cb_mannequin'},
+      {icon:'🚶',text:'Ignorer et passer — tu n\'as pas le temps',next:'c3_moins'},
+    ]},
+
+  c2a_win:{mood:'dungeon',art:'⚔️✨',title:'Prouvée',
+    text:`<p>Le mannequin s'incline. La salle applaudit — les armures vides cognent leurs boucliers. Tu reprends <em>+2 HP</em>. La porte vers la salle du trône s'ouvre.</p>`,
+    choices:[{icon:'👑',text:'Vers la Reine',next:'c3'}]},
+
+  c3_moins:{mood:'dungeon',art:'🚶',title:'Passée sans prouver',
+    text:`<p>Tu passes. Le mannequin ne t'arrête pas. Mais quelque chose dans le château change légèrement — la Reine sera plus méfiante en te voyant.</p>`,
+    choices:[{icon:'👑',text:'Vers la Reine',next:'c3_mefiance'}]},
+
+  c2b:{mood:'mystery',art:'📚🌙',title:'La bibliothèque secrète de la Reine',
+    text:`<p>Des livres que personne n'a jamais lus — les journaux intimes de Selena sur cent ans. Tu en ouvres un au hasard, puis tu choisis.</p>`,
+    choices:[
+      {icon:'📖',text:'Lire les premières entrées — avant la malédiction',next:'c2b_debut'},
+      {icon:'📖',text:'Lire les dernières entrées — ces cent dernières années',next:'c2b_fin'},
+    ]},
+
+  c2b_debut:{mood:'mystery',art:'📖✨',title:'Selena avant tout',
+    text:`<p>Les premières entrées sont lumineuses — elle décrit ses nuits à tisser les étoiles, les animaux qui venaient lui rendre visite, sa fierté quand une étoile filante atteignait exactement la bonne fenêtre.</p>
+<p><em>"Je suis heureuse,"</em> écrit-elle à la page 12. <em>"Je ne sais pas si je le mérite, mais je suis heureuse."</em></p>
+<p>Savoir qui elle était t'aidera à lui parler.</p>`,
+    choices:[{icon:'👑',text:'Aller la trouver',next:'c3_zoe_debut'}]},
+
+  c2b_fin:{mood:'mystery',art:'📖💔',title:'Cent ans de silence',
+    text:`<p>Les dernières entrées sont plus courtes. Les mots se raréfient. Certaines pages sont juste des dates, sans texte. D'autres ont des taches qui ressemblent à des larmes séchées.</p>
+<p>La dernière entrée, datée d'hier : <em>"Je ne voulais pas voler le cristal. Je voulais juste qu'il brille pour moi aussi, une seule fois."</em></p>
+<p>Tu refermes le livre, la gorge serrée.</p>`,
+    choices:[{icon:'👑',text:'Aller la trouver',next:'c3_zoe_fin'}]},
+
+  c2c:{mood:'mystery',art:'🌸🏛️',title:'La chambre des souvenirs',
+    text:`<p>Une pièce ronde entièrement couverte d'hologrammes — la vie de Selena dans ses moindres détails. Tu reconnais certaines scènes du pavillon, mais ici c'est plus proche, plus réel.</p>
+<p>Le dragon qui gardait le château t'a laissé passer. Il murmure derrière toi : <em>"Elle ne sait plus comment demander de l'aide. Elle a oublié que c'était possible."</em></p>`,
+    choices:[{icon:'👑',text:'Aller trouver Selena',next:'c3_mia'}]},
+
+  // ──────────────────────────────────────────
+  // CONFRONTATION FINALE
+  // ──────────────────────────────────────────
+  c3:{mood:'mystery',art:'👑🌑',title:'La Reine de la Nuit',
+    text:`<p>La grande salle du trône. Des centaines d'étoiles emprisonnées dans des cages de verre illuminent la pièce d'une lumière froide et belle. Le sol est noir comme un lac sans fond.</p>
+<p>La Reine de la Nuit se tient au centre. Grande, belle, épuisée. Le Cristal des Étoiles brille dans ses mains — d'une lumière qu'elle ne laisse pas s'échapper.</p>
+<p>Elle se retourne. Ses yeux gris, comme de la cendre, te parcourent de haut en bas. <em>"Encore quelqu'un venu me prendre ce qui est mien."</em></p>`,
+    choices:[
+      {icon:'⚔️',text:'"Rends le cristal — ou affronte les conséquences."',next:'cb_reine'},
+      {icon:'💬',text:'"Pourquoi tu penses que c\'est le tien ?"',next:'c3_dialogue'},
+      {icon:'💎',text:'Montrer le fragment de cristal en silence',requires_item:'fragment_cristal',next:'fin_magie'},
+      {icon:'🌺',text:'Lui offrir la fleur de lumière, sans un mot',requires_item:'fleur_lumiere',next:'fin_nature'},
+      {icon:'🌟',text:'S\'asseoir par terre, face à elle, et l\'écouter',next:'c3_ecouter'},
+    ]},
+
+  c3_mefiance:{mood:'mystery',art:'👑🌑',title:'La Reine méfiante',
+    text:`<p>La Reine se retourne. Elle te regarde avec une méfiance tranchante. <em>"Encore une qui passe en force."</em></p>`,
+    choices:[
+      {icon:'⚔️',text:'L\'affronter',next:'cb_reine'},
+      {icon:'💬',text:'"Non — je voulais juste te parler."',next:'c3_dialogue'},
+      {icon:'💎',text:'Montrer le fragment',requires_item:'fragment_cristal',next:'fin_magie'},
+      {icon:'🌟',text:'S\'asseoir et attendre qu\'elle parle',next:'c3_ecouter'},
+    ]},
+
+  c3_zoe_debut:{mood:'mystery',art:'👑📚',title:'La gardienne des étoiles',
+    text:`<p>La Reine se retourne. Elle te voit. Ses yeux tombent sur la plume dans tes mains — celle que la forêt t'a donnée.</p>
+<p><em>"Tu as lu mes livres,"</em> dit-elle. Pas de colère. De la surprise.</p>`,
+    choices:[
+      {icon:'📖',text:'"J\'ai lu le livre rouge. Je sais qui tu étais."',next:'c3_dialogue_selena'},
+      {icon:'💎',text:'Montrer le fragment de cristal',requires_item:'fragment_cristal',next:'fin_magie'},
+      {icon:'🌟',text:'L\'inviter à s\'asseoir et à parler',next:'c3_ecouter'},
+    ]},
+
+  c3_zoe_fin:{mood:'mystery',art:'👑💔',title:'La dernière page',
+    text:`<p>La Reine te regarde entrer. Puis elle voit ta main trembler légèrement — tu tiens encore le souvenir de sa dernière entrée de journal.</p>
+<p><em>"Tu as lu... les dernières pages,"</em> dit-elle. Cendres dans la voix.</p>`,
+    choices:[
+      {icon:'💬',text:'"Je ne voulais pas voler le cristal. Je voulais juste qu\'il brille pour moi aussi."',next:'c3_dialogue_journal'},
+      {icon:'💎',text:'Montrer le fragment de cristal',requires_item:'fragment_cristal',next:'fin_magie'},
+      {icon:'🌸',text:'Tendre simplement la main vers elle',next:'c3_ecouter'},
+    ]},
+
+  c3_mia:{mood:'mystery',art:'👑🌸',title:'Selena seule',
+    text:`<p>La Reine a le dos tourné quand tu entres. Elle regarde par une fenêtre les étoiles qui s'éteignent une à une.</p>
+<p><em>"Je sais pourquoi tu es là,"</em> dit-elle sans se retourner. <em>"Tu veux le cristal. Comme tous les autres."</em> Sa voix est cassée. Comme quelqu'un qui a trop pleuré.</p>`,
+    choices:[
+      {icon:'💬',text:'Dire doucement : "Je suis venue te voir, toi."',next:'c3_voir_toi'},
+      {icon:'🌺',text:'Lui offrir la fleur de lumière en silence',requires_item:'fleur_lumiere',next:'fin_nature'},
+      {icon:'🌟',text:'S\'asseoir près d\'elle, sans rien dire',next:'c3_ecouter'},
+    ]},
+
+  c3_voir_toi:{mood:'mystery',art:'💔✨',title:'Enfin vue',
+    text:`<p>La Reine se retourne. Ses yeux cherchent un mensonge dans les tiens. Il n'y en a pas.</p>
+<p><em>"Personne n'a jamais dit ça,"</em> murmure-t-elle. Sa voix tremble. <em>"Cent ans. Pas une seule personne."</em></p>
+<p>Elle lâche le Cristal. Il flotte entre vous, en apesanteur.</p>`,
+    choices:[
+      {icon:'🌸',text:'Rester avec elle un moment avant de remettre le cristal ensemble',next:'fin_amitie'},
+      {icon:'🌺',text:'Lui offrir la fleur de lumière',requires_item:'fleur_lumiere',next:'fin_nature'},
+    ]},
+
+  c3_dialogue:{mood:'mystery',art:'👑💬',title:'La question qui dérange',
+    text:`<p>La Reine s'arrête. Personne ne lui avait posé cette question — tout le monde voulait juste le cristal.</p>
+<p><em>"Parce que c'est tout ce qu'il me reste,"</em> dit-elle enfin. <em>"De toute ma vie d'avant."</em></p>
+<p>Elle commence à parler. Les mots arrivent lentement, puis de plus en plus vite, comme s'ils avaient attendu cent ans.</p>`,
+    choices:[
+      {icon:'🌟',text:'L\'écouter jusqu\'au bout sans l\'interrompre',next:'c3_ecouter_long'},
+      {icon:'📖',text:'Lui révéler ce que tu sais sur la malédiction',next:'fin_mystere'},
+      {icon:'💎',text:'Lui montrer le fragment de cristal',requires_item:'fragment_cristal',next:'fin_magie'},
+    ]},
+
+  c3_dialogue_selena:{mood:'mystery',art:'📕👑',title:'Selena reconnue',
+    text:`<p><em>"Tu sais qui j'étais ?"</em> Elle s'assoit lentement, comme si ses jambes ne la portaient plus. <em>"Il y a longtemps que je ne m'en souviens plus moi-même."</em></p>
+<p>Tu lui parles d'elle — de la femme dans le livre, celle qui tissait les étoiles, celle qui aimait la pluie de météores.</p>`,
+    choices:[
+      {icon:'🔮',text:'Lui révéler ce que tu sais sur la malédiction et comment la briser',next:'fin_mystere'},
+      {icon:'🌟',text:'Simplement rester avec elle dans ce souvenir',next:'fin_amitie'},
+    ]},
+
+  c3_dialogue_journal:{mood:'mystery',art:'📖💔✨',title:'Les propres mots',
+    text:`<p>Tu lui récites sa propre phrase. Elle se fige.</p>
+<p><em>"Tu as lu... mes mots ?"</em> Sa voix se brise. <em>"Tout ce temps, j'avais peur que personne ne lise jamais. Que ça disparaisse avec moi."</em></p>`,
+    choices:[
+      {icon:'🔮',text:'Lui révéler ce que tu sais sur la malédiction',next:'fin_mystere'},
+      {icon:'🌟',text:'Lui dire que ses mots comptaient',next:'fin_amitie'},
+    ]},
+
+  c3_ecouter:{mood:'mystery',art:'🌟👑',title:'Enfin quelqu\'un qui écoute',
+    text:`<p>Tu t'assieds par terre, face à elle. Elle te regarde, déconcertée. Puis elle parle.</p>
+<p>Lentement d'abord. Puis les mots se déversent — cent ans de silence comprimés dans cette seule conversation. Elle raconte tout.</p>`,
+    choices:[
+      {icon:'🌟',text:'Lui proposer de ne plus être seule',next:'fin_amitie'},
+      {icon:'💎',text:'Lui montrer le fragment de cristal maintenant que tu comprends',requires_item:'fragment_cristal',next:'fin_magie'},
+    ]},
+
+  c3_ecouter_long:{mood:'mystery',art:'🌟👑💬',title:'La longue nuit',
+    text:`<p>Elle parle jusqu'à ce que le ciel commence à pâlir. Tu n'interromps pas une seule fois. À la fin, elle s'arrête, surprise d'elle-même.</p>
+<p><em>"Je n'avais jamais tout dit à voix haute."</em></p>`,
+    choices:[
+      {icon:'🌟',text:'"Tu n\'as plus besoin d\'être seule."',next:'fin_amitie'},
+      {icon:'💎',text:'Lui montrer le fragment de cristal',requires_item:'fragment_cristal',next:'fin_magie'},
+    ]},
+
+  // ──────────────────────────────────────────
   // COMBATS
-  // ═══════════════════════════════════════════════
+  // ──────────────────────────────────────────
+  cb_loups_3:{combat:true,enemy:{name:'Meute de loups',emoji:'🐺🐺🐺',hp:15,maxHp:15,atk:3},next_win:'l1_win',next_lose:'combat_lose'},
+  cb_loup_chef:{combat:true,enemy:{name:'Chef des loups',emoji:'🐺',hp:8,maxHp:8,atk:3},next_win:'l1_win',next_lose:'combat_lose'},
+  cb_loup_seul:{combat:true,enemy:{name:'Loup solitaire',emoji:'🐺',hp:6,maxHp:6,atk:2},next_win:'l1_win',next_lose:'combat_lose'},
+  cb_chevalier:{combat:true,enemy:{name:'Chevalier oublié',emoji:'🗡️',hp:14,maxHp:14,atk:4},next_win:'r1',next_lose:'combat_lose'},
+  cb_ogre:{combat:true,enemy:{name:'Ogre de brume',emoji:'🧌',hp:12,maxHp:12,atk:5},next_win:'l4_win_vite',next_lose:'combat_lose'},
+  cb_ogre_avantage:{combat:true,enemy:{name:'Ogre blessé',emoji:'🧌',hp:8,maxHp:8,atk:3},next_win:'l4_win_melodie',next_lose:'combat_lose'},
+  cb_gardes:{combat:true,enemy:{name:'Gardes des ombres',emoji:'👤👤',hp:14,maxHp:14,atk:3},next_win:'c3',next_lose:'combat_lose'},
+  cb_mannequin:{combat:true,enemy:{name:'Mannequin magique',emoji:'🤺',hp:10,maxHp:10,atk:2},next_win:'c2a_win',next_lose:'c3_moins'},
+  cb_reine:{combat:true,enemy:{name:'Reine de la Nuit',emoji:'👑',hp:18,maxHp:18,atk:5},next_win:'fin_epique',next_lose:'fin_amere'},
 
-  combat_loups: { combat: true, enemy: { name: 'Meute de loups', emoji: '🐺🐺🐺', hp: 15, maxHp: 15, atk: 3 }, next_win: 'lea_sauve_phoenix', next_lose: 'combat_lose' },
-  combat_loup_chef: { combat: true, enemy: { name: 'Chef des loups', emoji: '🐺', hp: 10, maxHp: 10, atk: 3 }, next_win: 'lea_sauve_phoenix', next_lose: 'combat_lose' },
-  combat_loup_seul: { combat: true, enemy: { name: 'Loup solitaire', emoji: '🐺', hp: 7, maxHp: 7, atk: 2 }, next_win: 'lea_sauve_phoenix', next_lose: 'combat_lose' },
-  combat_ogre: { combat: true, enemy: { name: 'Ogre de brume', emoji: '🧌', hp: 12, maxHp: 12, atk: 4 }, next_win: 'lea_chaudron_vole', next_lose: 'combat_lose' },
-  combat_ogre_avantage: { combat: true, enemy: { name: 'Ogre blessé', emoji: '🧌', hp: 8, maxHp: 8, atk: 3 }, next_win: 'lea_ogre_ami', next_lose: 'combat_lose' },
-  combat_gardes: { combat: true, enemy: { name: 'Gardes des ombres', emoji: '👤👤', hp: 14, maxHp: 14, atk: 3 }, next_win: 'rencontre_reine_lea', next_lose: 'combat_lose' },
-  combat_reine: { combat: true, enemy: { name: 'Reine de la Nuit', emoji: '👑', hp: 18, maxHp: 18, atk: 5 }, next_win: 'fin_epique', next_lose: 'combat_lose' },
+  combat_lose:{mood:'dungeon',art:'💫😵',title:'Tu t\'es évanouie…',
+    text:`<p>La magie est trop forte. Tu t'effondres. Mais la forêt te protège — des lucioles t'enveloppent et te transportent doucement hors de danger.</p>
+<p>Tu te réveilles dans la clairière d'entrée. Tu es vivante. Avec quelques HP en moins, mais vivante. La forêt te donne une seconde chance.</p>`,
+    choices:[{icon:'💪',text:'Reprendre le chemin, plus sage cette fois',next:'a3'}]},
 
-  combat_lose: {
-    mood: 'dungeon', art: '💫😵',
-    title: 'Tu t\'es évanouie…',
-    text: `<p>La magie sombre est trop forte. Tu t'effondres.</p>
-           <p>Mais la forêt te protège — des lucioles t'entourent et te transportent doucement loin du danger.</p>
-           <p>Tu te réveilles dans la clairière de départ, avec quelques PV récupérés. La forêt te donne une seconde chance.</p>`,
-    choices: [
-      { icon: '💪', text: 'Reprendre le chemin avec une meilleure stratégie', next: 'entree_foret' },
-    ],
-  },
-
-  // ═══════════════════════════════════════════════
+  // ──────────────────────────────────────────
   // FINS
-  // ═══════════════════════════════════════════════
+  // ──────────────────────────────────────────
+  fin_epique:{ending:true,mood:'victory',art:'⚔️👑✨',badge:'🏆 FIN ÉPIQUE',badgeColor:'#F59E0B',title:'La guerrière des étoiles',
+    text:`Tu l'as vaincue. La Reine tombe à genoux, le Cristal lui échappant des mains. Il flotte entre vous, patient.\n\nElle lève les yeux. Pas de colère dans son regard — de la lassitude. Et quelque chose d'autre. Du soulagement.\n\n"Cent ans," dit-elle. "Cent ans que j'attendais quelqu'un d'assez fort pour m'arrêter. Parce que moi... je n'y arrivais plus seule."\n\nTu remets le Cristal à sa place dans le ciel. Cette fois, il brille pour tout le monde — y compris pour elle. Tu es nommée Chevalière des Étoiles, la première humaine à porter ce titre depuis l'aube du monde.\n\nLe phénix bébé, guéri et grand maintenant, t'emmène chez toi au lever du soleil. Ses plumes sont chaudes contre ta joue.\n\nChaque nuit d'été depuis lors, quand tu vois une étoile filante traverser le ciel, tu sais que c'est elle qui te dit merci.`},
 
-  fin_epique: {
-    mood: 'victory', art: '⚔️👑✨',
-    ending: true,
-    badge: '🏆 FIN ÉPIQUE', badgeColor: '#F59E0B',
-    title: 'La guerrière des étoiles',
-    text: `Tu l'as vaincue en combat loyal. La Reine tombe à genoux, épuisée — et pour la première fois depuis cent ans, elle pleure.\n\nSes larmes dissolvent la brume noire qui entourait le château. Le Cristal des Étoiles reprend sa place dans le ciel.\n\nMais tu restes à ses côtés. Elle n'avait pas besoin d'être battue. Elle avait besoin que quelqu'un soit assez fort pour la forcer à s'arrêter.\n\nEnsemble, vous reconstruisez la forêt. Tu es nommée "Chevalière des Étoiles" — la seule humaine à porter ce titre.\n\nTu retournes chez toi au matin, chevauchant le phénix, avec dans le cœur une amitié qui traversera les siècles.`,
-  },
+  fin_mystere:{ending:true,mood:'victory',art:'🔮👑🌟',badge:'🔮 FIN MYSTÈRE',badgeColor:'#818CF8',title:'La malédiction brisée',
+    text:`Tu lui révèles tout ce que tu as appris. La malédiction, la sorcière morte, et surtout : la seule façon de la briser.\n\n"Elle ne se brise que si tu choisis toi-même de faire confiance. Personne ne peut le faire à ta place."\n\nElle te regarde longtemps. Elle cherche encore un mensonge. Il n'y en a pas.\n\n"Cent ans," murmure-t-elle. "Pas une seule personne n'a cherché à comprendre. Pas une seule."\n\nElle ferme les yeux. Le silence dure. Puis quelque chose se brise dans la pièce — pas un bruit, une sensation. Comme une vitre qui s'effrite sans tomber.\n\nQuand elle rouvre les yeux, ils sont dorés. Comme des étoiles.\n\n"Je m'appelle Selena," dit-elle. Pour la première fois depuis cent ans, elle dit son propre nom.\n\nLa forêt entière chante.`},
 
-  fin_mystere: {
-    mood: 'mystery', art: '🔮👑🌟',
-    ending: true,
-    badge: '🔮 FIN MYSTÈRE', badgeColor: '#818CF8',
-    title: 'La malédiction brisée',
-    text: `La Reine s'effondre. Pas vaincue — libérée.\n\nLa malédiction avait duré cent ans parce que personne n'avait jamais essayé de comprendre. Toi, tu as cherché. Tu as trouvé. Et tu lui as dit la vérité en face.\n\n"Tu as le choix,"lui dit-tu. "Tu peux choisir de faire confiance. La malédiction ne peut pas te forcer à être seule si tu ne l'acceptes plus."\n\nElle ferme les yeux. Quand elle les rouvre, ils ne sont plus gris — ils brillent comme des étoiles.\n\n"Je m'appelle Selena," dit-elle pour la première fois depuis un siècle.\n\nEt la forêt entière chante.`,
-  },
+  fin_nature:{ending:true,mood:'victory',art:'🌺👑🌿',badge:'🌿 FIN NATURE',badgeColor:'#10B981',title:'La guérisseuse',
+    text:`Tu n'as pas dit un seul mot. Tu t'es approchée doucement et tu lui as tendu la fleur.\n\nElle la regarde. Elle tend la main et s'arrête. "Pour moi ?"\n\n"Pour toi."\n\nAu contact de la fleur, quelque chose se dénoue dans sa poitrine. Une lumière dorée s'étend depuis elle, traverse les murs, descend dans les fondations, remonte dans les jardins. Les fleurs grises reprennent des couleurs. Les champignons éteints s'illuminent. Les étoiles dans leurs cages s'affolent — puis les cages s'ouvrent d'elles-mêmes.\n\nElle ne redevient pas immédiatement joyeuse. La guérison prend du temps. Mais elle commence ce soir.\n\nVous plantez la fleur ensemble dans le jardin du château. Elle ne fanera jamais. Et la forêt grandit autour d'elle, chaque année un peu plus lumineuse.\n\nParfois, quand tu penses à quelqu'un qui souffre seul, tu penses à elle. Et tu fais quelque chose.`},
 
-  fin_nature: {
-    mood: 'victory', art: '🌺👑🌿',
-    ending: true,
-    badge: '🌿 FIN NATURE', badgeColor: '#10B981',
-    title: 'La guérisseuse',
-    text: `Tu tends la fleur de lumière à la Reine.\n\nElle l'observe, incrédule. "Pour moi ?"\n\n"Pour toi," réponds-tu simplement.\n\nAu contact de la fleur, quelque chose se dénoue dans sa poitrine. La malédiction se brise — pas à cause d'un combat, pas à cause d'une découverte intellectuelle. Juste... parce que quelqu'un a pensé à elle.\n\nLe château se transforme. Les murs gris fleurissent. Le jardin reprend vie. Des papillons de lumière remplissent la salle du trône.\n\nLa Reine et toi plantez la fleur au centre du jardin. Elle ne fanera jamais. Et chaque fois qu'une étoile brille plus fort que d'habitude, c'est Selena qui pense à toi.`,
-  },
+  fin_amitie:{ending:true,mood:'victory',art:'🌟👑🌸',badge:'✨ FIN DE L\'AMITIÉ',badgeColor:'#EC4899',title:'Deux gardiennes, une forêt',
+    text:`"Qu'est-ce que tu veux vraiment ?"\n\nC'est la première fois en cent ans que quelqu'un lui pose cette question. Elle ne sait pas quoi répondre. Alors tu attends. Le temps qu'il faut.\n\n"Je veux... ne plus être seule. Et que la forêt vive. Les deux à la fois."\n\n"Ces deux choses ne s'excluent pas," dis-tu.\n\nVous remettez le Cristal ensemble. Il brille désormais d'une lumière à deux teintes — dorée le jour, argentée la nuit. La forêt respire de nouveau.\n\nLa Reine — Selena — devient officiellement la gardienne des nuits étoilées. Et toi, son amie dans le monde des humains. La première en cent ans.\n\nChaque été, une étoile trace un sillage doré dans le ciel de ton jardin. Trop long pour être une étoile filante ordinaire. Juste la bonne longueur pour être elle, qui te dit bonjour.`},
 
-  fin_amitie: {
-    mood: 'victory', art: '🌟👑🌸',
-    ending: true,
-    badge: '✨ FIN DE L\'AMITIÉ', badgeColor: '#EC4899',
-    title: 'Deux reines, une forêt',
-    text: `"Que veux-tu ?" demandes-tu doucement. "Vraiment."\n\nLa Reine réfléchit longtemps. C'est la première fois qu'on lui pose cette question.\n\n"Je veux... ne plus être seule. Et que la forêt vive. Les deux."\n\n"Ces deux choses ne s'excluent pas," dit-tu.\n\nEnsemble, vous remettez le Cristal à sa place dans le ciel. Cette fois, il brille pour tout le monde — y compris pour elle.\n\nLa Reine devient la gardienne des nuits étoilées. Et toi, son amie du monde des humains.\n\nChaque été, une étoile filante trace un sillage doré dans le ciel de ton jardin. C'est elle qui te dit bonjour.`,
-  },
+  fin_magie:{ending:true,mood:'victory',art:'💎💫👑',badge:'💎 FIN MAGIQUE',badgeColor:'#8B5CF6',title:'Les deux moitiés du monde',
+    text:`Tu sors le fragment. La Reine recule d'un pas. "D'où... d'où vient ça ?"\n\n"De ta forêt. Comme s'il attendait d'être trouvé."\n\nLe grand Cristal dans ses mains commence à vibrer. Le fragment dans ta paume répond. À quelques centimètres l'un de l'autre, ils chantent — un accord parfait, comme deux voix qui se retrouvent après une longue séparation.\n\nIls s'assemblent. Personne ne les force. Ils se rejoignent d'eux-mêmes, avec la certitude de deux choses qui n'auraient jamais dû être séparées.\n\nL'explosion de lumière dure trois secondes. Quand elle s'éteint, le château est différent. Lumineux. La brume s'est dissipée. On voit les étoiles depuis chaque fenêtre.\n\n"Ils n'ont jamais été séparés par un vol," réalises-tu. "Ils cherchaient juste leurs deux moitiés."\n\nSelena rit. Pour la première fois depuis cent ans, elle rit vraiment — un rire qui monte depuis le ventre et remplit la pièce entière. Et la forêt rit avec elle.`},
 
-  fin_magie: {
-    mood: 'victory', art: '💎💫👑',
-    ending: true,
-    badge: '💎 FIN MAGIQUE', badgeColor: '#8B5CF6',
-    title: 'Les deux cristaux réunis',
-    text: `Tu sors le fragment de cristal. La Reine recule.\n\n"D'où... d'où vient ça ?"\n\n"Il était caché dans la forêt. Votre forêt. Comme s'il attendait d'être trouvé."\n\nLa Reine tend le grand cristal. Tu approches le fragment. À quelques centimètres l'un de l'autre, ils commencent à vibrer — et puis à chanter.\n\nIls s'assemblent. Un éclair de lumière blanche illumine tout le château, toute la forêt, tout le ciel.\n\n"Ils n'ont jamais été séparés par vol," réalises-tu. "Ils cherchaient juste leurs deux moitiés."\n\nLa Reine rit. Pour la première fois depuis cent ans, elle rit vraiment. Et la forêt rit avec elle.`,
-  },
+  fin_amere:{ending:true,mood:'mystery',art:'💫😔🌑',badge:'💔 FIN AMÈRE',badgeColor:'#6B7280',title:'Une prochaine fois',
+    text:`Tu t'effondres. La magie de la Reine de la Nuit est absolue.\n\nMais au lieu de continuer, elle s'arrête. Elle te regarde tomber. Et pour la première fois depuis longtemps, quelque chose dans son regard change.\n\n"Pourquoi ?" demande-t-elle. "Pourquoi tu t'es battue pour une forêt que tu ne connaissais pas ce matin ?"\n\nTu ne peux pas répondre. Mais elle a vu quelque chose dans tes yeux. Quelque chose qu'elle n'avait pas vu depuis cent ans.\n\nElle te laisse partir. Le Cristal reste. La forêt continue à s'éteindre lentement, une étoile après l'autre.\n\nMais cette nuit-là, une seule étoile résiste. Juste au-dessus de ta fenêtre. Elle ne s'éteindra jamais.\n\n"À une prochaine fois," murmure le vent à travers les feuilles.\n\nEt tu sais, au fond de toi, que tu reviendras.`},
 };
 
-// ══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // STATE
-// ══════════════════════════════════════════════════════════════
-const STATE = {
-  char: null,
-  playerHp: 10,
-  maxHp: 10,
-  inventory: [],
-  history: [],
-  currentMood: 'forest',
-  combat: null,
-};
+// ══════════════════════════════════════════════
+const STATE={char:null,playerHp:10,maxHp:10,inventory:[],history:[],mood:'forest',combat:null,_cWin:null,_cLose:null};
 
-// ══════════════════════════════════════════════════════════════
-// HELPERS
-// ══════════════════════════════════════════════════════════════
-function hasItem(key) { return STATE.inventory.includes(key); }
-function addItem(key) {
-  if (!hasItem(key)) {
-    STATE.inventory.push(key);
-    playSFX('pickup');
-    renderInventoryBar();
+function hasItem(k){return STATE.inventory.includes(k)}
+function addItem(k){if(!hasItem(k)){STATE.inventory.push(k);sfx('pickup');renderInv()}}
+function renderInv(){
+  const b=document.getElementById('inventory-bar');
+  if(!b)return;
+  if(STATE.inventory.length===0){b.style.display='none';return}
+  b.style.display='flex';
+  b.innerHTML=STATE.inventory.map(k=>`<span title="${ITEMS[k]?.n||k}">${ITEMS[k]?.e||'?'}</span>`).join('');
+}
+function updateHP(){
+  const pct=Math.max(0,STATE.playerHp/STATE.maxHp*100);
+  const bar=document.getElementById('hp-bar');
+  const txt=document.getElementById('hp-txt');
+  if(bar){bar.style.width=pct+'%';bar.style.background=pct>60?'#10B981':pct>30?'#F59E0B':'#EF4444'}
+  if(txt)txt.textContent=STATE.playerHp;
+}
+function renderCharPill(){
+  const p=document.getElementById('char-pill'),h=document.getElementById('hp-wrap');
+  if(!STATE.char){p.style.display='none';h.style.display='none';return}
+  const c=CHARS[STATE.char];
+  p.style.display='flex';p.style.color=c.color;p.innerHTML=c.emoji+' '+c.short;
+  h.style.display='flex';updateHP();
+}
+function burst(n=25){
+  const cols=['#C4B5FD','#F9A8D4','#FDE68A','#A7F3D0','#7C3AED','#EC4899'];
+  for(let i=0;i<n;i++){
+    const el=document.createElement('div');el.className='particle';
+    el.style.cssText=`left:${Math.random()*100}vw;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${cols[Math.floor(Math.random()*cols.length)]};animation-delay:${Math.random()*.8}s`;
+    document.body.appendChild(el);setTimeout(()=>el.remove(),2500);
   }
 }
 
-function updateHPBar() {
-  const pct = Math.max(0, (STATE.playerHp / STATE.maxHp) * 100);
-  const bar = document.getElementById('hp-bar');
-  const txt = document.getElementById('hp-text');
-  if (!bar) return;
-  bar.style.width = pct + '%';
-  bar.style.background = pct > 60 ? '#10B981' : pct > 30 ? '#F59E0B' : '#EF4444';
-  if (txt) txt.textContent = STATE.playerHp;
-}
-
-function renderInventoryBar() {
-  const bar = document.getElementById('inventory-bar');
-  if (!bar) return;
-  if (STATE.inventory.length === 0) { bar.style.display = 'none'; return; }
-  bar.style.display = 'flex';
-  bar.innerHTML = STATE.inventory.map(k => `<span title="${ITEMS[k]?.name || k}">${ITEMS[k]?.emoji || '?'}</span>`).join('');
-}
-
-function renderCharPill() {
-  const pill = document.getElementById('char-pill');
-  const hpWrap = document.getElementById('hp-wrap');
-  if (!STATE.char) { pill.style.display = 'none'; hpWrap.style.display = 'none'; return; }
-  const c = CHARS[STATE.char];
-  pill.style.display = 'flex';
-  pill.style.color = c.color;
-  pill.innerHTML = `${c.emoji} ${c.short}`;
-  hpWrap.style.display = 'flex';
-  updateHPBar();
-}
-
-function particles(n = 25) {
-  const colors = ['#C4B5FD','#F9A8D4','#FDE68A','#A7F3D0','#7C3AED','#EC4899'];
-  for (let i = 0; i < n; i++) {
-    const el = document.createElement('div');
-    el.className = 'particle';
-    el.style.cssText = `left:${Math.random()*100}vw; width:${6+Math.random()*8}px; height:${6+Math.random()*8}px; background:${colors[Math.floor(Math.random()*colors.length)]}; animation-delay:${Math.random()*0.8}s;`;
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 2500);
-  }
-}
-
-function typewrite(element, html, done) {
-  // Strip HTML and animate text only for performance
-  element.innerHTML = html;
-  // Simple: just show instantly for complex HTML, animate only plain text nodes
-  element.style.opacity = '0';
-  element.style.transition = 'opacity 0.4s';
-  setTimeout(() => { element.style.opacity = '1'; if (done) done(); }, 50);
-}
-
-// ══════════════════════════════════════════════════════════════
-// COMBAT SYSTEM
-// ══════════════════════════════════════════════════════════════
-function startCombat(sceneKey) {
-  const config = STORY[sceneKey];
-  const char = CHARS[STATE.char];
-  STATE.combat = {
-    enemy: { ...config.enemy },
-    defending: false,
-    potionUsed: false,
-    nextWin: config.next_win,
-    nextLose: config.next_lose,
-  };
-  playAmbient('battle');
+// ══════════════════════════════════════════════
+// COMBAT ENGINE
+// ══════════════════════════════════════════════
+function startCombat(key){
+  const cfg=S[key];
+  STATE.combat={enemy:{...cfg.enemy},defending:false,potionUsed:false};
+  STATE._cWin=cfg.next_win;STATE._cLose=cfg.next_lose;
+  if(STATE.mood!=='battle'){STATE.mood='battle';playAmbient('battle')}
   renderCombat();
 }
 
-function renderCombat() {
-  const c = STATE.combat;
-  const char = CHARS[STATE.char];
-  const playerPct = Math.max(0, (STATE.playerHp / STATE.maxHp) * 100);
-  const enemyPct = Math.max(0, (c.enemy.hp / c.enemy.maxHp) * 100);
-
-  document.getElementById('app').innerHTML = `
+function renderCombat(){
+  const c=STATE.combat,ch=CHARS[STATE.char];
+  const pp=Math.max(0,STATE.playerHp/STATE.maxHp*100);
+  const ep=Math.max(0,c.enemy.hp/c.enemy.maxHp*100);
+  document.getElementById('app').innerHTML=`
     <div class="combat-card pop-in">
       <div class="combat-title">⚔️ Combat — ${c.enemy.name}</div>
       <div class="combatants">
         <div class="combatant">
-          <div class="combatant-emoji">${char.emoji}</div>
-          <div class="combatant-name">${char.short}</div>
-          <div class="hp-label" style="color:#34D399">❤️ ${STATE.playerHp}/${STATE.maxHp}</div>
-          <div class="hp-bar-wrap"><div class="hp-bar-fill hp-player" style="width:${playerPct}%"></div></div>
+          <div class="c-emoji">${ch.emoji}</div>
+          <div class="c-name">${ch.short}</div>
+          <div class="c-hp" style="color:#34D399">❤️ ${STATE.playerHp}/${STATE.maxHp}</div>
+          <div class="c-bar"><div class="c-bar-fill hp-p" style="width:${pp}%"></div></div>
         </div>
-        <div class="vs-text">VS</div>
+        <div class="vs">VS</div>
         <div class="combatant">
-          <div class="combatant-emoji">${c.enemy.emoji}</div>
-          <div class="combatant-name">${c.enemy.name}</div>
-          <div class="hp-label" style="color:#F87171">💀 ${c.enemy.hp}/${c.enemy.maxHp}</div>
-          <div class="hp-bar-wrap"><div class="hp-bar-fill hp-enemy" style="width:${enemyPct}%"></div></div>
+          <div class="c-emoji">${c.enemy.emoji}</div>
+          <div class="c-name">${c.enemy.name}</div>
+          <div class="c-hp" style="color:#F87171">💀 ${c.enemy.hp}/${c.enemy.maxHp}</div>
+          <div class="c-bar"><div class="c-bar-fill hp-e" style="width:${ep}%"></div></div>
         </div>
       </div>
-      <div class="dice-area" id="dice-area">
-        <div class="dice-result" id="dice-result">Choisis ton action !</div>
-      </div>
+      <div class="dice-area" id="dice-area"><span style="color:#94A3B8">Choisis ton action !</span></div>
       <div class="combat-actions">
-        <button class="combat-btn" onclick="combatAction('attack')">⚔️ <span>Attaquer</span> <span style="color:#C4B5FD;font-size:0.8rem;margin-left:auto">Dé 1-6 + ${CHARS[STATE.char].atkBonus} ATK</span></button>
-        <button class="combat-btn" onclick="combatAction('defend')">🛡️ <span>Défendre</span> <span style="color:#C4B5FD;font-size:0.8rem;margin-left:auto">+2 prochaine ATK</span></button>
-        ${hasItem('potion_force') && !c.potionUsed ? `<button class="combat-btn" onclick="combatAction('potion')">⚗️ <span>Utiliser la potion de force</span> <span style="color:#F59E0B;font-size:0.8rem;margin-left:auto">+3 ATK ce tour</span></button>` : ''}
-        ${hasItem('bouclier_courage') ? `<button class="combat-btn" onclick="combatAction('bouclier')">🛡️ <span>Lever le bouclier du phénix</span> <span style="color:#C4B5FD;font-size:0.8rem;margin-left:auto">Bloquer un tour</span></button>` : ''}
+        <button class="combat-btn" onclick="cAction('attack')">⚔️ <span>Attaquer</span><span style="color:#C4B5FD;font-size:.78rem;margin-left:auto">dé 1-6 + ${ch.atkBonus} ATK</span></button>
+        <button class="combat-btn" onclick="cAction('defend')">🛡️ <span>Défendre</span><span style="color:#C4B5FD;font-size:.78rem;margin-left:auto">+2 ATK prochain tour</span></button>
+        ${hasItem('potion_force')&&!c.potionUsed?`<button class="combat-btn" onclick="cAction('potion')">⚗️ <span>Utiliser la Potion de force</span><span style="color:#F59E0B;font-size:.78rem;margin-left:auto">+3 ATK ce tour</span></button>`:''}
+        ${hasItem('bouclier_feu')?`<button class="combat-btn" onclick="cAction('bouclier')">🛡️ <span>Lever le Bouclier de feu</span><span style="color:#C4B5FD;font-size:.78rem;margin-left:auto">Bloque un tour</span></button>`:''}
+        ${hasItem('potion_soin')?`<button class="combat-btn" onclick="cAction('soin')">💊 <span>Potion de soin</span><span style="color:#34D399;font-size:.78rem;margin-left:auto">Récupère 4 HP</span></button>`:''}
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function rollDie(max = 6) {
-  return Math.floor(Math.random() * max) + 1;
-}
+function d6(){return Math.floor(Math.random()*6)+1}
 
-function combatAction(action) {
-  initAudio();
-  const c = STATE.combat;
-  const char = CHARS[STATE.char];
-  let log = '';
-  let playerAtk = 0;
-  let skip = false;
+function cAction(action){
+  initAC();
+  const c=STATE.combat,ch=CHARS[STATE.char];
+  let log='',pDmg=0,skip=false;
 
-  if (action === 'attack') {
-    const roll = rollDie();
-    playerAtk = roll + char.atkBonus + (c.defending ? 2 : 0);
-    log = `🎲 Tu lances le dé : <strong>${roll}</strong> + ${char.atkBonus} ATK${c.defending ? ' + 2 défense' : ''} = <strong>${playerAtk}</strong>`;
-    c.defending = false;
-  } else if (action === 'defend') {
-    c.defending = true;
-    log = '🛡️ Tu te mets en garde. +2 à ta prochaine attaque !';
-    skip = true;
-  } else if (action === 'potion') {
-    c.potionUsed = true;
-    const roll = rollDie();
-    playerAtk = roll + char.atkBonus + 3;
-    log = `⚗️ Potion de force ! 🎲 Dé : <strong>${roll}</strong> + ${char.atkBonus} + 3 = <strong>${playerAtk}</strong>`;
-    STATE.inventory = STATE.inventory.filter(i => i !== 'potion_force');
-    renderInventoryBar();
-  } else if (action === 'bouclier') {
-    log = '🛡️ Le bouclier du phénix absorbe toute l\'attaque ennemie ce tour !';
-    skip = true;
-    // enemy does 0 damage
-    const enemyRoll = rollDie();
-    log += `<br>👹 ${c.enemy.name} attaque pour <strong>${enemyRoll + c.enemy.atk - c.enemy.atk}</strong> (bloqué !)`;
-    showDiceResult(log);
-    playSFX('magic');
-    setTimeout(() => {
-      if (c.enemy.hp <= 0) endCombat(true);
-      else if (STATE.playerHp <= 0) endCombat(false);
-      else renderCombat();
-    }, 1800);
-    return;
+  if(action==='attack'){
+    const r=d6();pDmg=r+ch.atkBonus+(c.defending?2:0);c.defending=false;
+    log=`<div class="dice-spin">🎲</div> Dé : <strong>${r}</strong> + ${ch.atkBonus}${c.defending?'+2':''} = <strong>${pDmg}</strong>`;
+  } else if(action==='defend'){
+    c.defending=true;skip=true;log='🛡️ Tu te mets en garde — +2 ATK au prochain tour.';
+  } else if(action==='potion'){
+    c.potionUsed=true;const r=d6();pDmg=r+ch.atkBonus+3;
+    STATE.inventory=STATE.inventory.filter(i=>i!=='potion_force');renderInv();
+    log=`⚗️ Potion ! <div class="dice-spin">🎲</div> ${r} + ${ch.atkBonus} + 3 = <strong>${pDmg}</strong>`;
+  } else if(action==='bouclier'){
+    skip=true;log='🛡️ Le Bouclier de feu absorbe toute l\'attaque ennemie ce tour !';
+    document.getElementById('dice-area').innerHTML=log;
+    document.querySelectorAll('.combat-btn').forEach(b=>b.disabled=true);
+    sfx('magic');setTimeout(()=>{if(c.enemy.hp<=0)endCombat(true);else if(STATE.playerHp<=0)endCombat(false);else renderCombat()},1800);return;
+  } else if(action==='soin'){
+    skip=true;STATE.playerHp=Math.min(STATE.maxHp,STATE.playerHp+4);
+    STATE.inventory=STATE.inventory.filter(i=>i!=='potion_soin');renderInv();updateHP();
+    log='💊 Tu bois la potion de soin — +4 HP !';
   }
 
-  if (!skip && playerAtk > 0) {
-    // Player hits enemy
-    const dmg = Math.max(1, playerAtk - rollDie());
-    c.enemy.hp = Math.max(0, c.enemy.hp - dmg);
-    log += `<br>💥 Tu infliges <strong>${dmg}</strong> dégâts !`;
-    playSFX('hit');
-    shakeElement('.combatant:last-child .combatant-emoji');
+  if(!skip&&pDmg>0){
+    const dmg=Math.max(1,pDmg-d6());c.enemy.hp=Math.max(0,c.enemy.hp-dmg);
+    log+=`<br>💥 Tu infliges <strong>${dmg}</strong> dégâts !`;sfx('hit');
   }
 
-  // Enemy counter-attack
-  if (!skip && c.enemy.hp > 0) {
-    const enemyRoll = rollDie();
-    const enemyAtk = enemyRoll + c.enemy.atk;
-    const playerDef = rollDie() + 1;
-    const dmgTaken = Math.max(0, enemyAtk - playerDef);
-    STATE.playerHp = Math.max(0, STATE.playerHp - dmgTaken);
-    log += `<br>👹 ${c.enemy.name} attaque (${enemyRoll}+${c.enemy.atk}=${enemyAtk}), tu pares (${playerDef}) — tu reçois <strong>${dmgTaken}</strong> dégâts.`;
-    if (dmgTaken > 0) playSFX('damage');
-    updateHPBar();
-  } else if (skip) {
-    // Defend: still take some enemy damage
-    if (action === 'defend') {
-      const enemyRoll = rollDie();
-      const dmgTaken = Math.max(0, enemyRoll);
-      STATE.playerHp = Math.max(0, STATE.playerHp - dmgTaken);
-      log += `<br>👹 ${c.enemy.name} attaque quand même — tu reçois <strong>${dmgTaken}</strong> dégâts réduits.`;
-      if (dmgTaken > 0) playSFX('damage');
-      updateHPBar();
-    }
+  if(c.enemy.hp>0&&!skip){
+    const er=d6(),eAtk=er+c.enemy.atk,pDef=d6()+1,taken=Math.max(0,eAtk-pDef);
+    STATE.playerHp=Math.max(0,STATE.playerHp-taken);
+    log+=`<br>👹 ${c.enemy.name} : ${er}+${c.enemy.atk}=${eAtk} vs déf ${pDef} — tu reçois <strong>${taken}</strong> dégâts.`;
+    if(taken>0)sfx('damage');updateHP();
+  } else if(action==='defend'||action==='soin'){
+    const er=d6(),taken=action==='defend'?Math.max(0,er-1):0;
+    if(action==='defend'&&c.enemy.hp>0){STATE.playerHp=Math.max(0,STATE.playerHp-taken);if(taken>0)sfx('damage');updateHP();log+=`<br>👹 Attaque réduite — ${taken} dégât${taken>1?'s':''}.`}
   }
 
-  showDiceResult(log);
-
-  setTimeout(() => {
-    if (c.enemy.hp <= 0) endCombat(true);
-    else if (STATE.playerHp <= 0) endCombat(false);
+  document.getElementById('dice-area').innerHTML=log;
+  document.querySelectorAll('.combat-btn').forEach(b=>b.disabled=true);
+  setTimeout(()=>{
+    if(c.enemy.hp<=0)endCombat(true);
+    else if(STATE.playerHp<=0)endCombat(false);
     else renderCombat();
-  }, 2000);
+  },2000);
 }
 
-function showDiceResult(html) {
-  const el = document.getElementById('dice-result');
-  if (el) {
-    el.innerHTML = `<div class="dice-spin">🎲</div><br>${html}`;
-    // Disable buttons during animation
-    document.querySelectorAll('.combat-btn').forEach(b => b.disabled = true);
-  }
+function endCombat(won){
+  STATE.combat=null;
+  if(won){playAmbient('forest');STATE.mood='forest';sfx('victory');burst(30);render(STATE._cWin);}
+  else{STATE.playerHp=Math.max(3,Math.floor(STATE.maxHp*.3));updateHP();render(STATE._cLose);}
 }
 
-function shakeElement(selector) {
-  const el = document.querySelector(selector);
-  if (el) { el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 400); }
-}
-
-function endCombat(won) {
-  STATE.combat = null;
-  const scene = STORY[won ? 'temp_win' : 'temp_lose'];
-  if (won) {
-    playAmbient('forest');
-    playSFX('victory');
-    particles(30);
-    // Store where to go
-    render(STATE._combatNextWin);
-  } else {
-    STATE.playerHp = Math.max(3, Math.floor(STATE.maxHp * 0.3));
-    updateHPBar();
-    render('combat_lose');
-  }
-}
-
-// ══════════════════════════════════════════════════════════════
 // RENDER
-// ══════════════════════════════════════════════════════════════
-function render(sceneKey) {
-  STATE.history.push(sceneKey);
-
-  const scene = STORY[sceneKey];
-  if (!scene) { console.error('Unknown scene:', sceneKey); return; }
-
-  // Handle combat scenes
-  if (scene.combat) {
-    STATE._combatNextWin = scene.next_win;
-    STATE._combatNextLose = scene.next_lose;
-    startCombat(sceneKey);
-    return;
-  }
-
-  if (scene.ending) { renderEnding(scene); return; }
-
-  // Change mood
-  if (scene.mood && scene.mood !== STATE.currentMood) {
-    STATE.currentMood = scene.mood;
-    playAmbient(scene.mood);
-  }
-
-  // Give items
-  if (scene.items_given) scene.items_given.forEach(addItem);
-
-  // Filter choices
-  let choices = scene.choices.filter(c => {
-    if (c.requires_item && !hasItem(c.requires_item)) return false;
-    return true;
-  });
-
-  const app = document.getElementById('app');
-  app.innerHTML = `
+function render(key){
+  STATE.history.push(key);
+  const scene=S[key];
+  if(!scene){console.error('Unknown scene:',key);return;}
+  if(scene.combat){startCombat(key);return;}
+  if(scene.ending){renderEnding(scene);return;}
+  if(scene.mood&&scene.mood!==STATE.mood){STATE.mood=scene.mood;playAmbient(scene.mood);}
+  if(scene.items_given)scene.items_given.forEach(addItem);
+  if(scene.items_given_conditional&&!hasItem(scene.items_given_conditional))addItem(scene.items_given_conditional);
+  const choices=(scene.choices||[]).filter(c=>!c.requires_item||hasItem(c.requires_item));
+  document.getElementById('app').innerHTML=`
     <div class="scene-art">${scene.art}</div>
     <div class="story-card">
       <div class="scene-title">${scene.title}</div>
-      <div class="scene-text" id="scene-text-inner">${scene.text}</div>
+      <div class="scene-text">${scene.text}</div>
     </div>
     <div class="choices">
-      ${choices.map(c => `
-        <button class="choice-btn" onclick="choose('${c.next}', this)">
+      ${choices.map(c=>`
+        <button class="choice-btn" onclick="choose('${c.next}',this)">
           <div class="choice-icon">${c.icon}</div>
           <div class="choice-body">
             <span class="choice-main">${c.text}</span>
-            ${c.hint ? `<span class="choice-hint">${c.hint}</span>` : ''}
+            ${c.hint?`<span class="choice-hint">${c.hint}</span>`:''}
           </div>
-        </button>
-      `).join('')}
+        </button>`).join('')}
     </div>
   `;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function renderEnding(scene) {
-  stopMusic();
-  playAmbient('victory');
-  playSFX('victory');
-  particles(40);
-
-  const textFormatted = scene.text.split('\n\n').map(p => `<p>${p}</p>`).join('');
-  document.getElementById('app').innerHTML = `
-    <div class="scene-art" style="font-size:6rem">${scene.art}</div>
+function renderEnding(scene){
+  stopMusic();playAmbient('victory');sfx('victory');burst(40);
+  const txt=scene.text.split('\n\n').map(p=>`<p>${p}</p>`).join('');
+  document.getElementById('app').innerHTML=`
+    <div class="scene-art" style="font-size:5.5rem">${scene.art}</div>
     <div class="story-card ending-card pop-in">
-      <div class="ending-badge" style="background:${scene.badgeColor}25;color:${scene.badgeColor};border:1px solid ${scene.badgeColor}50">${scene.badge}</div>
-      <div class="ending-title">${scene.title}</div>
-      <div class="ending-text">${textFormatted}</div>
-      <button class="restart-btn" onclick="restart()">🌟 Nouvelle aventure</button>
+      <div class="end-badge" style="background:${scene.badgeColor}22;color:${scene.badgeColor};border:1px solid ${scene.badgeColor}55">${scene.badge}</div>
+      <div class="end-title">${scene.title}</div>
+      <div class="end-text">${txt}</div>
+      <button class="restart-btn" onclick="restart()">&#x1F31F; Nouvelle aventure</button>
     </div>
   `;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function renderTitle() {
+function renderTitle(){
   stopMusic();
-  document.getElementById('char-pill').style.display = 'none';
-  document.getElementById('hp-wrap').style.display = 'none';
-  document.getElementById('inventory-bar').style.display = 'none';
-
-  document.getElementById('app').innerHTML = `
-    <div class="scene-art" style="font-size:5rem;margin-bottom:12px">🌲✨🌙</div>
-    <div class="title-main">La Forêt<br>des Étoiles</div>
-    <div class="title-sub">Une aventure dont tu es le héros ✨ v2</div>
+  document.getElementById('char-pill').style.display='none';
+  document.getElementById('hp-wrap').style.display='none';
+  document.getElementById('inventory-bar').style.display='none';
+  document.getElementById('app').innerHTML=`
+    <div class="scene-art" style="font-size:4.5rem;margin-bottom:12px">&#x1F332;&#x2728;&#x1F319;</div>
+    <div class="title-main">La For&ecirc;t<br>des &Eacute;toiles</div>
+    <div class="title-sub">Une aventure dont tu es le h&eacute;ros &mdash; v3</div>
     <div class="story-card">
       <div class="scene-text">
-        <p>La <strong>Reine de la Nuit</strong> a pris le Cristal des Étoiles. Sans lui, la forêt s'éteint.</p>
-        <p>Mais qui est-elle vraiment ? Et pourquoi a-t-elle fait ça ?</p>
-        <p>Choisis ton héroïne — chacune vit une aventure différente, avec ses propres combats, ses propres découvertes.</p>
+        <p>La <strong>Reine de la Nuit</strong> a pris le Cristal des &Eacute;toiles. La for&ecirc;t s'&eacute;teint.</p>
+        <p>Qui est-elle vraiment ? Chaque h&eacute;ro&iuml;ne vivra une aventure diff&eacute;rente &mdash; ses propres combats, ses propres d&eacute;couvertes, et peut-&ecirc;tre une v&eacute;rit&eacute; que les autres ne trouveront pas.</p>
       </div>
     </div>
     <div class="char-grid">
-      ${Object.entries(CHARS).map(([key, c]) => `
-        <div class="char-card" onclick="selectChar('${key}')">
-          <div class="char-emoji">${c.emoji}</div>
-          <div class="char-name">${c.name}</div>
-          <div class="char-trait">${c.trait}</div>
-          <div class="char-power">${c.power}</div>
-          <div class="char-stats">${c.stats}</div>
-        </div>
-      `).join('')}
+      ${Object.entries(CHARS).map(([k,c])=>`
+        <div class="char-card" onclick="selectChar('${k}')">
+          <div class="ch-emoji">${c.emoji}</div>
+          <div class="ch-name">${c.name}</div>
+          <div class="ch-trait">${c.trait}</div>
+          <div class="ch-power">${c.power}</div>
+          <div class="ch-stats">${c.stats}</div>
+        </div>`).join('')}
     </div>
   `;
 }
 
-function selectChar(key) {
-  initAudio();
-  const c = CHARS[key];
-  STATE.char = key;
-  STATE.playerHp = c.maxHp;
-  STATE.maxHp = c.maxHp;
-  STATE.inventory = [];
-  STATE.history = [];
-  STATE.currentMood = 'forest';
-  STATE.combat = null;
-
-  renderCharPill();
-  renderInventoryBar();
-  playAmbient('forest');
-  playSFX('magic');
+function selectChar(k){
+  initAC();
+  const c=CHARS[k];
+  STATE.char=k;STATE.playerHp=c.maxHp;STATE.maxHp=c.maxHp;
+  STATE.inventory=[];STATE.history=[];STATE.mood='forest';STATE.combat=null;
+  renderCharPill();renderInv();
+  playAmbient('forest');sfx('magic');
   render('start');
 }
 
-function choose(next, btn) {
-  playSFX('click');
-  btn.disabled = true;
-  btn.style.opacity = '0.5';
-  setTimeout(() => render(next), 250);
+function choose(next,btn){
+  sfx('click');btn.disabled=true;btn.style.opacity='.5';
+  setTimeout(()=>render(next),250);
 }
 
-function restart() {
-  STATE.char = null;
-  STATE.inventory = [];
-  STATE.history = [];
-  STATE.combat = null;
-  STATE.playerHp = 10;
+function restart(){
+  STATE.char=null;STATE.inventory=[];STATE.history=[];STATE.combat=null;STATE.playerHp=10;
   renderTitle();
 }
 
-// ══════════════════════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════════════════════
 renderTitle();
 </script>
 </body>
